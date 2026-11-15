@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WhiteShell — 我的世界中国版 Xposed 模块</title>
+<title>WhiteShell — 白壳科技辅助</title>
 <style>
 :root{
   --bg:#f6f8fb;
@@ -72,24 +72,24 @@ nav{
 
 /* ---------- Hero ---------- */
 header{padding:100px 0 92px}
-.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:60px;align-items:center}
+.hero{max-width:720px;margin:0 auto;text-align:center}
 .badge{
   display:inline-flex;align-items:center;gap:8px;
   padding:6px 14px;border-radius:999px;font-size:13px;font-weight:500;
   background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.18);color:var(--brand);
-  margin-bottom:24px;
+  margin-bottom:26px;
 }
 .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
 h1{
-  font-size:52px;line-height:1.14;letter-spacing:-1.6px;font-weight:800;
+  font-size:54px;line-height:1.14;letter-spacing:-1.8px;font-weight:800;
   margin-bottom:22px;
 }
 h1 .grad{
   background:linear-gradient(100deg,var(--brand),var(--brand2));
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.lead{font-size:17px;line-height:1.78;color:var(--sub);max-width:490px;margin-bottom:34px}
-.cta{display:flex;gap:14px;flex-wrap:wrap}
+.lead{font-size:17px;line-height:1.8;color:var(--sub);max-width:520px;margin:0 auto 34px}
+.cta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 .btn{
   padding:14px 28px;border-radius:12px;font-size:15px;font-weight:600;
   text-decoration:none;display:inline-flex;align-items:center;gap:9px;
@@ -104,28 +104,6 @@ h1 .grad{
   background:var(--card);color:var(--txt);border:1px solid var(--line);
 }
 .btn-ghost:hover{border-color:#c9d2e0;transform:translateY(-2px)}
-
-/* ---------- 终端卡 ---------- */
-.term{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:0 24px 60px -22px rgba(13,21,38,.18);
-  overflow:hidden;
-}
-.term-bar{
-  display:flex;align-items:center;gap:7px;padding:13px 16px;
-  border-bottom:1px solid var(--line);background:#fbfcfe;
-}
-.tdot{width:10px;height:10px;border-radius:50%}
-.term-title{margin-left:8px;font-size:12px;color:var(--sub);font-family:ui-monospace,Menlo,Consolas,monospace}
-.term-body{
-  padding:22px 20px;font-family:ui-monospace,Menlo,Consolas,monospace;
-  font-size:13px;line-height:2;color:#33415c;min-height:268px;
-}
-.term-body .k{color:var(--brand2)}
-.term-body .s{color:#0f9d58}
-.term-body .c{color:#94a3b8}
-.cur{display:inline-block;width:7px;height:15px;background:var(--brand);vertical-align:-2px;animation:blink 1.05s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
 
 /* ---------- 区块标题 ---------- */
 .sec-head{text-align:center;margin-bottom:52px}
@@ -163,7 +141,8 @@ section{padding:20px 0 100px}
 /* ---------- 下载 ---------- */
 .dl{
   background:linear-gradient(160deg,#0d1526,#16233d);
-  border-radius:24px;padding:60px 56px;color:#fff;position:relative;overflow:hidden;
+  border-radius:24px;padding:52px 48px;color:#fff;position:relative;overflow:hidden;
+  text-align:center;
 }
 .dl::before{
   content:"";position:absolute;top:-120px;right:-80px;width:420px;height:420px;border-radius:50%;
@@ -173,25 +152,16 @@ section{padding:20px 0 100px}
   content:"";position:absolute;bottom:-140px;left:-60px;width:360px;height:360px;border-radius:50%;
   background:radial-gradient(circle,rgba(37,99,235,.38),transparent 68%);
 }
-.dl-in{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
-.dl h2{font-size:34px;letter-spacing:-1px;margin-bottom:14px;font-weight:800}
-.dl p{color:#9aa8c0;font-size:15px;line-height:1.78;margin-bottom:26px;max-width:440px}
-.dl-meta{display:flex;gap:26px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#7f8fab;flex-wrap:wrap;line-height:1.9}
-.dl-meta b{color:#fff;font-weight:600}
-.dl-req{
-  margin-top:22px;padding:14px 18px;border-radius:12px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
-  font-size:13px;color:#9aa8c0;line-height:1.85;
-}
-.dl-req b{color:#e2e8f4;font-weight:600}
+.dl-in{position:relative;z-index:1;max-width:440px;margin:0 auto}
+.dl h2{font-size:32px;letter-spacing:-1px;margin-bottom:14px;font-weight:800}
+.dl p{color:#9aa8c0;font-size:15px;line-height:1.78;margin-bottom:30px}
 .dl-btn{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  padding:18px 24px;border-radius:14px;background:#fff;color:#0d1526;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:18px 48px;border-radius:14px;background:#fff;color:#0d1526;
   font-weight:700;font-size:15px;text-decoration:none;transition:transform .2s,box-shadow .2s;
   box-shadow:0 12px 32px rgba(0,0,0,.3);
 }
 .dl-btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.4)}
-.dl-note{margin-top:16px;font-size:12px;color:#6b7a95;text-align:center;font-family:ui-monospace,monospace;word-break:break-all}
 
 /* ---------- FAQ ---------- */
 .faq{max-width:820px;margin:0 auto}
@@ -228,15 +198,13 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:rgba(255,255,2
 
 /* ---------- 响应式 ---------- */
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;gap:44px}
-  h1{font-size:40px;letter-spacing:-1px}
+  h1{font-size:42px;letter-spacing:-1.2px}
   .grid{grid-template-columns:1fr 1fr}
-  .dl-in{grid-template-columns:1fr;gap:32px}
-  .dl{padding:44px 30px}
+  .dl{padding:42px 28px}
   .nav-links{display:none}
 }
 @media(max-width:600px){
-  h1{font-size:32px}
+  h1{font-size:34px}
   .grid{grid-template-columns:1fr}
   .sec-head h2{font-size:28px}
   header{padding:64px 0 56px}
@@ -254,30 +222,20 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:rgba(255,255,2
       <a href="#download">下载</a>
       <a href="#faq">常见问题</a>
     </div>
-    <a href="#download" class="nav-btn">获取模块</a>
+    <a href="#download" class="nav-btn">获取辅助</a>
   </div>
 </nav>
 
 <header>
-  <div class="wrap hero">
-    <div class="reveal">
-      <div class="badge"><span class="dot"></span>v2.4.0 已发布 · 适配中国版 1.20 内核</div>
-      <h1>我的世界中国版<br><span class="grad">Xposed 增强模块</span></h1>
-      <p class="lead">WhiteShell 是一个运行在 Xposed 框架下的游戏内增强模块。挂载后直接在游戏界面内呼出控制台，功能模块独立开关、热加载，不动原始安装包。</p>
+  <div class="wrap">
+    <div class="hero reveal">
+      <div class="badge"><span class="dot"></span>v2.4.0 已发布</div>
+      <h1>WhiteShell<br><span class="grad">白壳科技辅助</span></h1>
+      <p class="lead">为游戏体验提供稳定、干净的功能层。装一次，界面内随时调用，配置按需保存与还原。</p>
       <div class="cta">
         <a href="#download" class="btn btn-main">立即下载 →</a>
         <a href="#about" class="btn btn-ghost">了解功能</a>
       </div>
-    </div>
-
-    <div class="term reveal">
-      <div class="term-bar">
-        <span class="tdot" style="background:#ff5f57"></span>
-        <span class="tdot" style="background:#febc2e"></span>
-        <span class="tdot" style="background:#28c840"></span>
-        <span class="term-title">whiteshell — hook.log</span>
-      </div>
-      <div class="term-body" id="term"></div>
     </div>
   </div>
 </header>
@@ -285,40 +243,40 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:rgba(255,255,2
 <section id="about">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="sec-tag">// 模块介绍</div>
-      <h2>挂在框架层，改在运行时</h2>
-      <p>不修改安装包本体，全部逻辑通过 Xposed 在进程内注入。装一次，跟着版本走。</p>
+      <div class="sec-tag">// 功能介绍</div>
+      <h2>该有的都有，多余的没有</h2>
+      <p>功能按模块拆分，每个开关独立生效，界面内直接调，不用来回折腾。</p>
     </div>
     <div class="grid">
       <div class="feat reveal">
-        <div class="ico">🧷</div>
-        <h3>Xposed 框架挂载</h3>
-        <p>基于 LSPosed / EdXposed 的 Hook 入口，进程启动即加载，无需重签游戏包，原包随时可卸载重装。</p>
-      </div>
-      <div class="feat reveal">
         <div class="ico">🎛️</div>
         <h3>游戏内控制台</h3>
-        <p>ImGui 即时渲染面板，绑定悬浮按钮，游戏里随时呼出。开关、滑条、数值输入全部可拖拽调整，不切后台。</p>
+        <p>悬浮按钮随时呼出，所有开关、滑条、数值直接在游戏界面内拖拽调整，不切后台。</p>
       </div>
       <div class="feat reveal">
         <div class="ico">🧩</div>
         <h3>模块化功能开关</h3>
-        <p>每个功能独立编译成子模块，控制台里单独启用或关闭。关掉的模块不占渲染资源，也不挂对应 Hook 点。</p>
+        <p>每个功能独立开关，关掉的不占资源。按需启用，用不到的直接关，界面保持干净。</p>
       </div>
       <div class="feat reveal">
         <div class="ico">🔄</div>
         <h3>版本快速跟进</h3>
-        <p>游戏小版本更新后重新定位偏移，模块侧热更新配置。大版本改动走发版，跟进周期控制在数日内。</p>
+        <p>游戏更新后及时跟进适配，配置侧可单独更新，不用每次等整包重发。</p>
       </div>
       <div class="feat reveal">
         <div class="ico">🧠</div>
-        <h3>内存读写与偏移管理</h3>
-        <p>集中管理偏移表，按游戏版本分组存储。新版本只补偏移表，不改业务代码，降低出错面。</p>
+        <h3>底层参数管理</h3>
+        <p>偏移与参数集中管理，按版本分组存放，新版本只补参数表，业务逻辑不动。</p>
       </div>
       <div class="feat reveal">
         <div class="ico">💾</div>
         <h3>配置导入导出</h3>
-        <p>整套参数一键导出为 JSON，换设备或重装直接导入还原。支持多套配置分别保存、快速切换。</p>
+        <p>整套参数导出为 JSON，换设备或重装直接导入还原。支持多套配置分别保存切换。</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ico">📊</div>
+        <h3>实时状态面板</h3>
+        <p>帧率、占用、耗时逐项可视化，异常点直接标红，调参不靠猜。</p>
       </div>
     </div>
   </div>
@@ -328,23 +286,9 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:rgba(255,255,2
   <div class="wrap">
     <div class="dl reveal">
       <div class="dl-in">
-        <div>
-          <h2>下载 WhiteShell</h2>
-          <p>APK 单文件安装，装完在框架里勾选作用域，重启游戏生效。首次启动自动生成默认配置。</p>
-          <div class="dl-meta">
-            <span>版本 <b>v2.4.0</b></span>
-            <span>大小 <b>6.8 MB</b></span>
-            <span>更新 <b>2026-11-12</b></span>
-            <span>架构 <b>arm64-v8a</b></span>
-          </div>
-          <div class="dl-req">
-            <b>运行要求：</b>Android 8.0 及以上 · 已 Root 并安装 LSPosed 或 EdXposed · 我的世界中国版对应版本
-          </div>
-        </div>
-        <div>
-          <a href="#" class="dl-btn">⬇ 下载 APK</a>
-          <div class="dl-note">SHA256: 4c7e1b9a...f2d86e</div>
-        </div>
+        <h2>下载 WhiteShell</h2>
+        <p>当前版本 v2.4.0，点击下方按钮获取安装包。</p>
+        <a href="#" class="dl-btn">⬇ 下载</a>
       </div>
     </div>
   </div>
@@ -358,24 +302,20 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:rgba(255,255,2
     </div>
     <div class="faq">
       <details class="q reveal">
-        <summary>需要什么运行环境？</summary>
-        <p>Android 8.0 及以上，设备已 Root，框架侧安装 LSPosed 或 EdXposed。游戏本体为我的世界中国版，模块只对勾选了作用域的进程生效。</p>
-      </details>
-      <details class="q reveal">
         <summary>怎么安装？</summary>
-        <p>装 APK → 打开框架管理 → 模块列表里启用 WhiteShell → 在作用域里勾选我的世界中国版 → 强制停止游戏进程后重新启动。进游戏看到悬浮按钮即挂载成功。</p>
-      </details>
-      <details class="q reveal">
-        <summary>支持哪些游戏版本？</summary>
-        <p>当前 v2.4.0 适配中国版 1.20 内核版本。旧内核版本偏移表仍在包里，可在控制台的版本页手动切换。新版本发布后偏移表单独热更。</p>
+        <p>下载安装包安装，按引导完成首次配置，启动游戏后看到悬浮按钮即为加载成功。</p>
       </details>
       <details class="q reveal">
         <summary>游戏更新后失效怎么办？</summary>
-        <p>先检查控制台版本页有没有推送新偏移表，有就直接更新，重启游戏即可。没有推送说明是内核结构改动，等发版。偏移表位置在 <code>config/offsets/</code>，可手动替换。</p>
+        <p>先看控制台版本页有没有推送新参数表，有就直接更新，重启游戏即可。没有推送说明结构有改动，等版本发布。</p>
       </details>
       <details class="q reveal">
         <summary>配置怎么备份？</summary>
-        <p>控制台设置页里有导出按钮，生成一个 JSON 文件，默认落在 <code>WhiteShell/config/</code>。导入时选同一文件即可还原，多套配置分开命名保存。</p>
+        <p>控制台设置页点导出，生成 JSON 文件，默认落在 <code>WhiteShell/config/</code>。导入时选同一文件即可还原。</p>
+      </details>
+      <details class="q reveal">
+        <summary>运行占用高怎么办？</summary>
+        <p>在状态面板看耗时排行，把占用最高的模块降到低优先级，或直接关掉对应功能的渲染层。</p>
       </details>
     </div>
   </div>
@@ -393,28 +333,6 @@ footer{border-top:1px solid var(--line);padding:40px 0;background:rgba(255,255,2
 </footer>
 
 <script>
-// 终端逐行打字
-const lines = [
-  '<span class="c">$</span> xposed -> WhiteShell',
-  '<span class="c">></span> 加载模块入口 ......... <span class="s">OK</span>',
-  '<span class="c">></span> 匹配游戏进程 ......... <span class="s">OK</span>',
-  '<span class="c">></span> 读取偏移表 v1.20 ..... <span class="s">OK</span>',
-  '<span class="c">></span> 挂载 Hook 点 <span class="k">36</span> 处',
-  '<span class="c">></span> 控制台就绪 <span class="cur"></span>'
-];
-const box = document.getElementById('term');
-let li = 0;
-function typeLine(){
-  if(li >= lines.length) return;
-  const div = document.createElement('div');
-  div.innerHTML = lines[li];
-  box.appendChild(div);
-  li++;
-  setTimeout(typeLine, 320);
-}
-setTimeout(typeLine, 400);
-
-// 滚动入场
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
