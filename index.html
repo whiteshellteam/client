@@ -50,12 +50,13 @@
 
 <header class="nav" id="nav">
   <div class="nav-inner">
-    <a class="brand" href="#top" aria-label="WhiteShell 首页">
-      <span class="mark"><img src="assets/img/logo.png" alt="WhiteShell"></span>
+    <a class="brand" href="#top" aria-label="白壳科技 首页">
+      <span class="mark"><img src="assets/img/logo.png" alt="白壳科技"></span>
     </a>
     <nav class="nav-links">
       <a href="#features">特性</a>
       <a href="#faq">帮助</a>
+      <a href="#" data-doc="store">选购商品</a>
       <div class="cwrap" id="cwrap">
         <button class="community-btn cbtn" type="button" aria-haspopup="true" aria-expanded="false">
           社区
@@ -69,11 +70,6 @@
     </nav>
     <div class="nav-act">
       <button class="icon" id="themeBtn" data-theme-toggle aria-label="切换主题"></button>
-      <a class="btn-pill btn-fill" href="#" data-doc="store">
-        <svg viewBox="0 0 24 24"><path d="M6 2 4 6v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6l-2-4Z"/><path d="M4 6h16"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        选购商品
-      </a>
-      <a class="btn-pill btn-blue" href="#" data-dl data-bust>下载</a>
     </div>
     <button class="menu-btn nav-menu" id="menuBtn" aria-label="菜单" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -86,7 +82,7 @@
     <a href="#features">特性</a>
     <a href="#faq">帮助</a>
     <a href="#" data-doc="store">选购商品</a>
-    <a class="is-dl" href="#" data-dl data-bust>下载</a>
+    <a href="#" data-dl data-bust>下载</a>
   </div>
   <div class="sub">
     <a href="https://kook.vip/vp71ue" data-kook target="_blank" rel="noopener">KOOK 频道</a>
@@ -103,7 +99,7 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <h1>WhiteShell</h1>
+        <h1>白壳科技</h1>
         <p class="sub">基于底层原生注入，为《我的世界》中国版玩家提供极致流畅与安全的辅助体验。</p>
         <div class="hero-actions">
           <a class="btn-pill btn-blue" href="#" data-dl data-bust>下载模块</a>
@@ -132,7 +128,7 @@
 
   <section class="section" id="features">
     <div class="wrap">
-      <div class="sec-head rv"><h2>专业特性</h2></div>
+      <div class="sec-head rv"><h2>核心特性</h2></div>
       <div class="advantages rv">
         <div class="adv-card">
           <span class="adv-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
@@ -164,30 +160,15 @@
       <div class="faq rv">
         <details>
           <summary>支持哪些游戏版本？</summary>
-          <div class="ans">支持的游戏版本已内置在软件中：打开 WhiteShell 后，在软件内的版本信息处即可查看当前适配的游戏版本。游戏更新后我们会第一时间适配，无需等待官网另行公告。</div>
+          <div class="ans">支持的游戏版本已内置在 App 中：打开 App，看到「已支持启动」字样，就说明该版本已经适配。</div>
         </details>
         <details>
-          <summary>如何获取 WhiteShell？</summary>
-          <div class="ans">点击本站右上角的「下载」按钮即可获取最新版本。如需历史版本，或下载过程中遇到问题，欢迎加入官方 KOOK 频道获取帮助。</div>
+          <summary>怎么使用 WhiteShell？</summary>
+          <div class="ans">白壳科技的核心基于 Xposed：搭配 LSPosed 或 FPA 启用模块即可使用，其他支持注入的框架同样可以。</div>
         </details>
         <details class="faq-other">
           <summary>其他问题</summary>
         </details>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="start">
-    <div class="wrap">
-      <div class="end rv">
-        <div class="end-content">
-          <h2>开始你的白壳体验</h2>
-          <p>下载最新模块，或者加入官方社区获取支持。</p>
-          <div class="hero-actions">
-            <a class="btn-pill btn-blue" href="#" data-dl data-bust>下载模块</a>
-            <a class="btn-pill btn-fill" href="https://kook.vip/vp71ue" data-kook target="_blank" rel="noopener">加入社区</a>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -198,14 +179,17 @@
   <div class="wrap">
     <div class="foot">
       <div class="foot-brand">
-        <a class="brand" href="#top"><span class="mark"><img src="assets/img/logo.png" alt="WhiteShell"></span><span>WhiteShell</span></a>
+        <a class="brand" href="#top" aria-label="白壳科技 首页">
+          <span class="mark"><img src="assets/img/logo.png" alt="白壳科技"></span>
+          <span class="brand-name">白壳科技</span>
+        </a>
         <p>专为《我的世界》中国版打造的高级辅助工具。</p>
       </div>
       <div class="foot-cols">
         <div class="foot-col">
           <h4>产品</h4>
           <ul>
-            <li><a href="#features">专业特性</a></li>
+            <li><a href="#features">核心特性</a></li>
             <li><a href="#faq">帮助支持</a></li>
             <li><a href="#" data-doc="store">选购商品</a></li>
             <li><a href="#" data-dl data-bust>下载模块</a></li>

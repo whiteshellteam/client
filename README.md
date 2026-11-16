@@ -29,7 +29,7 @@
 │   │   ├── effects.js      # 分区入场、首屏视差
 │   │   ├── monitor.js      # 资源加载失败自检弹窗
 │   │   └── app.js          # 入口：按顺序初始化 + 全局快捷键
-│   ├── fonts               # 自托管字体（Inter 变量字体、JetBrains Mono）
+│   ├── fonts               # 自托管字体（Inter、MiSans 400/600、JetBrains Mono）
 │   └── img                 # 品牌 Logo 与方块素材
 └── .nojekyll               # 让 GitHub Pages 跳过 Jekyll
 ```

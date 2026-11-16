@@ -1,6 +1,7 @@
 /* ==========================================================================
    WhiteShell · Fonts
-   自托管字体（Inter 拉丁字形 + JetBrains Mono），中文走系统字体栈，不依赖第三方 CDN。
+   第三方字体自托管：Inter（拉丁）+ MiSans（中文）+ JetBrains Mono（等宽）。
+   中文正文用 MiSans，首屏那句介绍保留系统字体（见 layout.css 的 .hero .sub）。
    ========================================================================== */
 @font-face{
   font-family:"Inter";
@@ -10,6 +11,23 @@
   font-style:normal;
   font-display:swap;
 }
+
+/* MiSans：正文 400 + 标题 600 */
+@font-face{
+  font-family:"MiSans";
+  src:url("../fonts/misans-400.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"MiSans";
+  src:url("../fonts/misans-600.woff2") format("woff2");
+  font-weight:600;
+  font-style:normal;
+  font-display:swap;
+}
+
 @font-face{
   font-family:"JetBrains Mono";
   src:url("../fonts/jetbrains-mono-400.woff2") format("woff2");

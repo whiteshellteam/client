@@ -7,7 +7,7 @@
   .hero-grid{grid-template-columns:1fr;gap:40px}
   .hero{text-align:center;padding-top:60px}
   .hero-text{max-width:100%;margin-inline:auto;align-items:center}
-  .hero h1{font-size:clamp(42px,9vw,72px)}
+  .hero h1{font-size:clamp(32px,8.4vw,44px)}
   .hero-actions{justify-content:center}
   .hero-visual{max-width:420px;margin-inline:auto;height:350px}
   .mc-block.b1 { width: 100px; left: 0; top: 5%; }
@@ -22,11 +22,15 @@
 @media (max-width:860px){.nav-links{display:none}.nav-act{display:none}.menu-btn{display:grid}}
 @media (max-width:700px){
   .wrap{width:calc(100% - 40px)}
-  .foot{flex-direction:column;gap:32px}
-  .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
   .hero-actions{gap:16px}
-  .end .hero-actions .btn-pill{flex:1 1 auto}
   .nav-inner{width:calc(100% - 32px)}
+  footer{margin-top:56px;padding:30px 0 24px}
+  .foot{flex-direction:column;gap:22px}
+  .foot-brand{flex:0 0 auto}
+  .foot-brand .brand{margin-bottom:8px}
+  .foot-brand p{max-width:none}
+  .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .foot-bottom{margin-top:20px;padding-top:14px}
 }
 @media (max-width:560px){
   .faq summary{font-size:15.5px}

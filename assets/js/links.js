@@ -64,7 +64,7 @@
     if (!summary) return;
     summary.addEventListener('click', function (e) {
       e.preventDefault();
-      WS.toast.show('如需其他帮助，欢迎加入官方 KOOK 频道提交工单，管理员会尽快为你处理。');
+      WS.dialog.open('other');
     });
   }
 
