@@ -1,638 +1,835 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#ffffff">
-<meta name="description" content="白壳科技 WhiteShell —— 为《我的世界》中国版打造的辅助模块。">
-<link rel="dns-prefetch" href="//whiteshellteam.github.io">
-<link rel="preconnect" href="https://whiteshellteam.github.io">
-<link rel="canonical" href="https://whiteshellteam.github.io/client/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="白壳科技">
-<meta property="og:title" content="白壳科技 · WhiteShell">
-<meta property="og:description" content="为《我的世界》中国版打造的辅助模块，基于 LSPosed，悬浮面板即开即用。">
-<meta property="og:url" content="https://whiteshellteam.github.io/client/">
-<meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230071e3'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='17' font-weight='600' text-anchor='middle' fill='%23fff'>W</text></svg>">
-<title>白壳科技 · WhiteShell</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08080a">
+<meta name="description" content="白壳科技 —— 为《我的世界》中国版打造的辅助模块。">
+<title>白壳科技</title>
+<link rel="icon" type="image/png" href="whiteshell_logo.png">
 <script>
-(function(){
-  var root = document.documentElement;
-  root.className += ' js';
-  try{
-    var t = localStorage.getItem('ws-t');
-    if(!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    root.setAttribute('data-theme', t);
-  }catch(e){}
-})();
+(function(){try{
+  var t=localStorage.getItem('ws-t')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+  document.documentElement.dataset.theme=t;
+}catch(e){}})();
 </script>
 <style>
 :root{
-  --bg:#fff;--bg2:#f5f5f7;--fill:#e8e8ed;--text:#1d1d1f;--text2:#6e6e73;--text3:#86868b;
-  --line:rgba(0,0,0,.08);--blue:#0071e3;--blue-h:#0077ed;--radius:18px;
-  --ease:cubic-bezier(.16,1,.3,1);--shadow:0 20px 50px -30px rgba(0,0,0,.35);
+  --bg:#08080a;
+  --bg-soft:#0c0c10;
+  --card:#101014;
+  --line:rgba(255,255,255,.075);
+  --line-2:rgba(255,255,255,.15);
+  --fg:#f1f2f5;
+  --fg-dim:#8b8e99;
+  --accent:#c9ff4e;
+  --accent-2:#5ee6cf;
+  --accent-ink:#0a0a0a;
+  --glow:rgba(201,255,78,.14);
+  --shadow:0 40px 80px -50px rgba(0,0,0,.95);
+  --r:20px;
+  --max:1180px;
+  --nav-bg:rgba(16,16,20,.62);
+  --nav-bg-scroll:rgba(16,16,20,.28);
+  --title-a:#ffffff;
+  --title-b:#c9ff4e;
+  --title-c:#5ee6cf;
 }
-[data-theme="dark"]{
-  --bg:#000;--bg2:#1c1c1e;--fill:#2c2c2e;--text:#f5f5f7;--text2:#a1a1a6;--text3:#86868b;
-  --line:rgba(255,255,255,.1);--blue:#0a84ff;--blue-h:#409cff;
+[data-theme="light"]{
+  --bg:#f3f3ef;
+  --bg-soft:#eceae5;
+  --card:#ffffff;
+  --line:rgba(12,12,14,.08);
+  --line-2:rgba(12,12,14,.16);
+  --fg:#0d0d0f;
+  --fg-dim:#6c6f77;
+  --accent:#111111;
+  --accent-2:#12a893;
+  --accent-ink:#ffffff;
+  --glow:rgba(163,230,53,.22);
+  --shadow:0 40px 80px -50px rgba(30,34,20,.35);
+  --nav-bg:rgba(255,255,255,.62);
+  --nav-bg-scroll:rgba(255,255,255,.28);
+  --title-a:#0d0d0f;
+  --title-b:#4a5cf0;
+  --title-c:#12a893;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.47;overflow-x:hidden;
-  transition:background-color .4s var(--ease),color .4s var(--ease);
+  background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC","HarmonyOS Sans SC","Noto Sans SC",sans-serif;
+  font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background-color .5s ease,color .5s ease;
 }
 a{color:inherit;text-decoration:none}
-button{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 img,svg{display:block}
-::selection{background:var(--blue);color:#fff}
-.wrap{width:min(1080px,calc(100% - 48px));margin:0 auto}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  padding:12px 24px;border-radius:980px;font-size:14.5px;font-weight:500;
-  transition:background-color .25s,transform .25s var(--ease),box-shadow .25s;
-  white-space:nowrap;
+::selection{background:var(--accent);color:var(--accent-ink)}
+
+.bg{position:fixed;inset:0;z-index:-2;pointer-events:none;background:var(--bg);transition:background-color .5s ease}
+.bg::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(900px 500px at 50% -10%,var(--glow),transparent 68%),
+    radial-gradient(700px 500px at 92% 22%,var(--glow),transparent 62%);
+  opacity:.75;
+  transition:background .5s ease;
 }
-.btn:active{transform:scale(.97)}
-.btn-p{background:var(--blue);color:#fff}
-.btn-p:hover{background:var(--blue-h);box-shadow:0 8px 24px -10px var(--blue)}
-.btn-s{background:var(--fill);color:var(--text)}
-.btn-s:hover{background:var(--bg2)}
-.btn-g{color:var(--blue)}
-.btn-g:hover{text-decoration:underline}
-.nav{
-  position:fixed;inset:0 0 auto;z-index:80;height:48px;
-  background:color-mix(in srgb,var(--bg) 80%,transparent);
-  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--line);
+.bg::after{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:76px 76px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 55% at 50% 0%,#000 12%,transparent 78%);
+  mask-image:radial-gradient(ellipse 80% 55% at 50% 0%,#000 12%,transparent 78%);
+  opacity:.6;
 }
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:100%;width:min(1080px,calc(100% - 32px));margin:0 auto}
-.brand{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600;letter-spacing:-.02em}
-.brand i{
-  display:grid;place-items:center;width:22px;height:22px;border-radius:6px;
-  background:var(--blue);color:#fff;font-size:12px;font-weight:700;font-style:normal;
+.noise{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.brand-logo{
-  width:22px;height:22px;border-radius:6px;object-fit:contain;flex:none;display:block;
+.spot{
+  position:fixed;z-index:-1;pointer-events:none;
+  width:520px;height:520px;border-radius:50%;
+  left:0;top:0;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,var(--glow),transparent 65%);
+  opacity:0;transition:opacity .6s ease;
+  will-change:transform;
 }
-.nav-links{display:flex;align-items:center;gap:26px;list-style:none}
-.nav-links a,.nav-links .cbtn{font-size:13px;color:var(--text2);transition:color .2s}
-.nav-links a:hover,.nav-links .cbtn:hover,.cwrap.open .cbtn{color:var(--text)}
-.nav-right{display:flex;align-items:center;gap:14px}
-.icon{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:var(--text2);transition:background-color .2s,color .2s}
-.icon:hover{color:var(--text);background:var(--fill)}
-.icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.cwrap{position:relative;display:flex;align-items:center}
-.cbtn{display:flex;align-items:center;gap:5px}
-.cbtn svg{width:10px;height:10px;flex:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
-.cwrap.open .cbtn{color:var(--text)}
-.cwrap.open .cbtn svg{transform:rotate(180deg)}
-.cmenu{
-  position:absolute;top:calc(100% + 14px);left:50%;min-width:200px;padding:6px;
-  border:1px solid var(--line);border-radius:14px;background:var(--bg);
-  box-shadow:0 24px 60px -30px rgba(0,0,0,.45);
+
+.wrap{width:min(var(--max),100% - 2.5rem);margin-inline:auto}
+section{position:relative}
+.sec{padding:clamp(64px,10vw,120px) 0}
+
+.nav{position:fixed;top:18px;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0 1rem;pointer-events:none}
+.nav-inner{
+  pointer-events:auto;
+  display:flex;align-items:center;gap:4px;
+  padding:6px 6px 6px 14px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--nav-bg);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 18px 40px -28px rgba(0,0,0,.8);
+  transition:
+    background-color .55s cubic-bezier(.4,0,.2,1),
+    border-color .4s ease,
+    padding .4s cubic-bezier(.2,.7,.2,1),
+    transform .4s cubic-bezier(.2,.7,.2,1);
+  max-width:100%;
+  will-change:background-color;
+}
+.nav-inner.compact{padding:5px 5px 5px 12px}
+.nav-inner.scrolling{background:var(--nav-bg-scroll)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14.5px;letter-spacing:-.01em;white-space:nowrap}
+.mark{
+  width:22px;height:22px;border-radius:7px;flex:none;
+  overflow:hidden;
+  display:grid;place-items:center;
+  transition:background-color .4s ease,color .4s ease;
+}
+.mark img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+  border-radius:7px;
+}
+.nav-links{display:flex;gap:2px;margin-left:14px;align-items:center}
+.nav-links a{
+  padding:7px 13px;border-radius:999px;font-size:13.5px;color:var(--fg-dim);
+  transition:color .2s,background-color .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--fg);background:var(--card)}
+
+.community-wrap{position:relative}
+.community-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:999px;
+  font-size:13.5px;color:var(--fg-dim);white-space:nowrap;
+  transition:color .2s,background-color .2s;
+}
+.community-btn:hover{color:var(--fg);background:var(--card)}
+.community-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}
+.community-wrap.open .community-btn{color:var(--fg);background:var(--card)}
+.community-wrap.open .community-btn svg{transform:rotate(180deg)}
+.community-menu{
+  position:absolute;top:calc(100% + 12px);left:50%;
+  min-width:216px;
+  padding:6px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--card);
+  box-shadow:var(--shadow);
   opacity:0;visibility:hidden;pointer-events:none;
   transform:translateX(-50%) translateY(-6px);
-  transition:opacity .22s ease,transform .26s var(--ease),visibility .22s;
+  transition:opacity .22s ease,transform .28s cubic-bezier(.2,.7,.2,1),visibility .22s;
   z-index:10;
 }
-.cwrap.open .cmenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-.citem{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;font-size:13px;color:var(--text2);transition:background-color .2s,color .2s}
-.citem:hover{background:var(--bg2);color:var(--text)}
-.citem i{width:7px;height:7px;border-radius:50%;flex:none}
-.citem.kook i{background:#7c5cfc}
-.citem.tg i{background:#29a9eb}
-.menu-btn{display:none;position:relative;width:28px;height:28px;border-radius:50%;color:var(--text);flex:none}
-.menu-btn span{position:absolute;left:7px;width:14px;height:1.5px;border-radius:2px;background:currentColor;transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .25s ease}
-.menu-btn span:nth-child(1){top:8.75px}
-.menu-btn span:nth-child(2){top:13.25px}
-.menu-btn span:nth-child(3){top:17.75px}
-.menu-btn.open span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
-.menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(.3)}
-.menu-btn.open span:nth-child(3){transform:translateY(-4.5px) rotate(-45deg)}
-.sheet{
-  position:fixed;inset:0;z-index:90;background:var(--bg);
-  padding:76px 28px 40px;
-  opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s;
+.community-menu::before{
+  content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);
+  width:10px;height:10px;background:var(--card);
+  border-left:1px solid var(--line);border-top:1px solid var(--line);
 }
-.sheet.open{opacity:1;visibility:visible}
-.sheet a{display:block;padding:15px 0;font-size:22px;font-weight:600;letter-spacing:-.02em;border-bottom:1px solid var(--line)}
-.hero{padding:120px 0 60px;text-align:center;position:relative;overflow:hidden}
-.hero::after{
-  content:'';position:absolute;top:-180px;left:50%;width:800px;height:600px;
-  background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--blue) 10%,transparent),transparent 70%);
-  transform:translateX(-50%);pointer-events:none;
+.community-wrap.open .community-menu{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
 }
-.hero-in{position:relative;z-index:1}
-.eyebrow{font-size:13px;font-weight:600;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
-.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.06;letter-spacing:-.035em;font-weight:700}
-.hero-sub{margin-top:18px;font-size:clamp(16px,2vw,19px);color:var(--text2);max-width:520px;margin-left:auto;margin-right:auto;line-height:1.5}
-.hero-cta{margin-top:30px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-.hero-note{margin-top:16px;font-size:12px;color:var(--text3)}
+.community-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:8px;
+  font-size:13px;color:var(--fg-dim);
+  transition:background .2s,color .2s;
+}
+.community-item:hover{background:var(--bg-soft);color:var(--fg)}
+.community-item .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.community-item.kook .dot{background:#7c5cfc;box-shadow:0 0 8px rgba(124,92,252,.6)}
+.community-item.tg .dot{background:#29a9eb;box-shadow:0 0 8px rgba(41,169,235,.6)}
+
+.nav-act{display:flex;align-items:center;gap:6px;margin-left:8px}
+.icon-btn{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid var(--line);color:var(--fg-dim);
+  transition:color .2s,border-color .2s,transform .2s;
+}
+.icon-btn:hover{color:var(--fg);border-color:var(--line-2)}
+.icon-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:44px;padding:0 20px;border-radius:999px;
+  font-size:14px;font-weight:600;letter-spacing:-.005em;
+  border:1px solid transparent;white-space:nowrap;
+  transition:transform .25s cubic-bezier(.2,.7,.2,1),background-color .25s,color .25s,border-color .25s;
+}
+.btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn-solid{background:var(--accent);color:var(--accent-ink)}
+.btn-solid:hover{transform:translateY(-1px)}
+.btn-line{border-color:var(--line-2);color:var(--fg)}
+.btn-line:hover{border-color:var(--fg);transform:translateY(-1px)}
+.btn-sm{height:34px;padding:0 15px;font-size:13px}
+.btn-buy-nav{border-color:var(--line-2);color:var(--fg);background:transparent}
+.btn-buy-nav:hover{border-color:var(--accent);color:var(--accent)}
+
+.hero{padding:clamp(120px,15vw,180px) 0 clamp(56px,8vw,90px)}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr 1fr;
+  gap:clamp(40px,6vw,80px);
+  align-items:center;
+  text-align:left;
+}
+.hero-text{max-width:560px}
+.hero h1{
+  font-size:clamp(56px,9vw,124px);
+  line-height:.94;
+  letter-spacing:-.05em;
+  font-weight:800;
+  background:linear-gradient(120deg, var(--title-a) 22%, var(--title-b) 62%, var(--title-c) 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:titleShine 14s ease-in-out infinite;
+  text-wrap:balance;
+}
+@keyframes titleShine{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+.hero-sub{
+  margin-top:24px;max-width:480px;
+  font-size:clamp(14.5px,1.3vw,16px);line-height:1.78;color:var(--fg-dim);
+  text-wrap:pretty;
+}
+.hero-sub b{color:var(--fg);font-weight:600}
+.hero-cta{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px}
+
+.hero-visual{position:relative;max-width:440px;margin-left:auto;width:100%}
+.hero-visual::before{
+  content:"";position:absolute;inset:-40px;
+  background:radial-gradient(circle,var(--glow),transparent 65%);
+  pointer-events:none;z-index:-1;
+}
 .preview{
-  margin-top:56px;position:relative;
-  border:1px solid var(--line);border-radius:24px;overflow:hidden;
-  background:var(--bg2);box-shadow:var(--shadow);
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+  overflow:hidden;
 }
-.preview-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg)}
-.preview-bar i{width:8px;height:8px;border-radius:50%;background:var(--fill)}
-.preview-bar span{margin-left:8px;font-size:11px;color:var(--text3)}
-.preview-body{display:grid;grid-template-columns:180px 1fr;min-height:260px}
-@media (max-width:640px){.preview-body{grid-template-columns:1fr}}
-.preview-side{padding:16px 12px;border-right:1px solid var(--line);background:var(--bg)}
-.preview-side .p-tab{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:12.5px;color:var(--text2);margin-bottom:2px}
-.preview-side .p-tab.on{background:var(--fill);color:var(--text);font-weight:500}
-.preview-main{padding:18px 20px}
-.preview-main h4{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text)}
-.p-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:12.5px;color:var(--text2);border-bottom:1px solid var(--line)}
-.p-row:last-child{border-bottom:0}
-.sw{position:relative;width:34px;height:20px;border-radius:20px;background:var(--fill);transition:background-color .25s}
-.sw.on{background:var(--blue)}
-.sw::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
-.sw.on::after{transform:translateX(14px)}
-.section{padding:80px 0}
-.section:nth-child(even){background:var(--bg2)}
-.sec-head{text-align:center;margin-bottom:48px}
-.sec-head h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.03em;font-weight:700}
-.sec-head p{margin-top:10px;font-size:16px;color:var(--text2)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.tile{
-  padding:26px 22px;border:1px solid var(--line);border-radius:20px;background:var(--bg);
-  transition:transform .3s var(--ease),box-shadow .3s;
+.preview-head{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 16px;border-bottom:1px solid var(--line);
+  font-size:11.5px;color:var(--fg-dim);letter-spacing:.02em;
 }
-.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.tile-ico{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:color-mix(in srgb,var(--blue) 10%,transparent);margin-bottom:16px}
-.tile-ico svg{width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tile h3{font-size:15.5px;font-weight:600;margin-bottom:6px}
-.tile p{font-size:13px;color:var(--text2);line-height:1.55}
-.faq{max-width:760px;margin:0 auto}
-.faq-item{border-bottom:1px solid var(--line)}
-.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:15px;font-weight:500;text-align:left}
-.faq-q svg{width:14px;height:14px;flex:none;stroke:var(--text3);fill:none;stroke-width:2;stroke-linecap:round;transition:transform .3s var(--ease)}
-.faq-item.open .faq-q svg{transform:rotate(45deg)}
-.faq-a{overflow:hidden;max-height:0;transition:max-height .35s var(--ease)}
-.faq-a p{padding-bottom:18px;font-size:13.8px;color:var(--text2);line-height:1.65}
-.cta{padding:80px 0;text-align:center}
-.cta h2{font-size:clamp(26px,3.5vw,36px);letter-spacing:-.03em;font-weight:700}
-.cta p{margin-top:10px;color:var(--text2);font-size:15px}
-.cta .hero-cta{margin-top:26px}
-.foot{padding:56px 0 0;border-top:1px solid var(--line);background:var(--bg2)}
-.foot-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:28px}
-@media (max-width:640px){.foot-grid{grid-template-columns:1fr 1fr}}
-.foot .brand{margin-bottom:10px}
-.foot p{font-size:12.5px;color:var(--text3);line-height:1.7;max-width:24em}
-.foot h4{font-size:12px;font-weight:600;color:var(--text);margin-bottom:12px}
-.foot ul{list-style:none;display:grid;gap:9px}
-.foot a,.foot button{font-size:12.5px;color:var(--text2);transition:color .2s;text-align:left}
-.foot a:hover,.foot button:hover{color:var(--text)}
-.foot-bottom{margin-top:36px;padding:20px 0 36px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text3)}
-.modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px}
-.modal[hidden]{display:none}
-.modal-mask{position:absolute;inset:0;background:rgba(0,0,0,.42);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.modal-box{
-  position:relative;width:min(640px,100%);max-height:80vh;overflow:auto;
-  background:var(--bg);border:1px solid var(--line);border-radius:22px;
-  box-shadow:0 40px 90px -40px rgba(0,0,0,.6);
-  animation:pop .3s var(--ease);
+.preview-dots{display:flex;gap:5px;flex:none;margin-right:4px}
+.preview-dots i{width:7px;height:7px;border-radius:50%;background:var(--line-2)}
+.preview-tabs{
+  display:flex;gap:2px;
+  padding:10px 12px 4px;
+  border-bottom:1px solid var(--line);
 }
-@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
-.modal-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);background:var(--bg)}
-.modal-head h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
-.modal-body{padding:20px 22px 26px;font-size:13.8px;line-height:1.8;color:var(--text2)}
-.modal-body h4{margin:18px 0 5px;font-size:13.8px;font-weight:600;color:var(--text)}
-.modal-body h4:first-child{margin-top:0}
-.modal-body p{margin:0 0 8px}
-.modal-body ul{margin:0 0 8px;padding-left:1.15em}
-.modal-body li{margin-bottom:3px}
-#toast{
-  position:fixed;left:50%;bottom:28px;z-index:300;max-width:calc(100vw - 40px);
-  padding:10px 18px;border-radius:980px;background:var(--bg2);color:var(--text2);
-  box-shadow:0 20px 50px -30px rgba(0,0,0,.5);font-size:13px;text-align:center;
-  opacity:0;transform:translate(-50%,12px);pointer-events:none;
-  transition:opacity .3s ease,transform .3s var(--ease);
+.preview-tabs span{
+  padding:6px 12px;border-radius:8px;
+  font-size:12px;color:var(--fg-dim);
+  transition:background .2s,color .2s;
 }
-#toast.show{opacity:1;transform:translate(-50%,0)}
-@media (max-width:1000px){
+.preview-tabs span.on{background:var(--bg-soft);color:var(--fg);font-weight:600}
+.preview-list{padding:10px 12px 14px;display:flex;flex-direction:column;gap:1px}
+.preview-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:9px 8px;border-radius:8px;
+  font-size:13px;color:var(--fg-dim);
+  transition:background .2s;
+}
+.preview-row:hover{background:var(--bg-soft)}
+.sw{width:28px;height:16px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:.25s}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--fg-dim);transition:.25s}
+.sw.on{background:var(--accent)}
+.sw.on::after{left:14px;background:var(--accent-ink)}
+
+.strip{
+  margin-top:clamp(56px,8vw,90px);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:16px 0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.strip-track{display:flex;gap:44px;width:max-content;animation:slide 28s linear infinite}
+.strip:hover .strip-track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.strip span{
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--fg-dim);letter-spacing:.06em;white-space:nowrap;
+}
+.strip span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+
+.bento-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,42px)}
+.h2{font-size:clamp(26px,4.2vw,40px);line-height:1.12;letter-spacing:-.03em;font-weight:750;text-wrap:balance}
+.h2 em{font-style:normal;color:var(--fg-dim)}
+.lead{max-width:380px;font-size:14.5px;line-height:1.7;color:var(--fg-dim);text-wrap:pretty}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{
+  position:relative;overflow:hidden;
+  padding:24px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--card);
+  transition:border-color .35s ease,transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.card::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(260px 160px at var(--cx,50%) var(--cy,0%),var(--glow),transparent 70%);
+  opacity:0;transition:opacity .4s ease;
+}
+.card:hover::after{opacity:1}
+.card > *{position:relative;z-index:1}
+.card .k{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:10px;margin-bottom:16px;
+  background:var(--bg-soft);border:1px solid var(--line);color:var(--fg);
+}
+.card .k svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:15.5px;font-weight:650;letter-spacing:-.012em;margin-bottom:6px}
+.card p{font-size:13.5px;line-height:1.72;color:var(--fg-dim)}
+
+.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.faq-card{
+  padding:24px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--card);
+  transition:border-color .3s ease;
+}
+.faq-card:hover{border-color:var(--line-2)}
+.faq-card h3{font-size:15.5px;font-weight:650;letter-spacing:-.012em;margin-bottom:8px}
+.faq-card p{font-size:13.5px;line-height:1.75;color:var(--fg-dim)}
+.faq-card a{color:var(--accent);border-bottom:1px solid transparent;transition:border-color .2s}
+.faq-card a:hover{border-bottom-color:var(--accent)}
+
+.end{
+  padding:clamp(40px,6vw,64px) clamp(24px,4vw,48px);
+  border:1px solid var(--line);border-radius:calc(var(--r) + 8px);
+  background:var(--card);
+  text-align:center;position:relative;overflow:hidden;
+}
+.end::before{
+  content:"";position:absolute;left:50%;top:-40%;width:640px;height:420px;
+  transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(circle,var(--glow),transparent 66%);
+}
+.end > *{position:relative}
+.end h2{font-size:clamp(24px,3.8vw,34px);line-height:1.2;letter-spacing:-.03em;font-weight:750;text-wrap:balance}
+.end .hero-cta{margin-top:26px;justify-content:center}
+
+footer{margin-top:clamp(48px,7vw,80px);border-top:1px solid var(--line);padding:36px 0 40px}
+.foot{display:flex;flex-wrap:wrap;gap:24px 40px;justify-content:space-between;align-items:flex-start}
+.foot-brand{max-width:280px}
+.foot-brand p{margin-top:10px;font-size:13px;line-height:1.7;color:var(--fg-dim)}
+.foot-cols{display:flex;gap:44px;flex-wrap:wrap}
+.foot-cols h4{font-size:11.5px;font-weight:600;letter-spacing:.14em;color:var(--fg-dim);margin-bottom:10px;text-transform:uppercase}
+.foot-cols ul{list-style:none;display:grid;gap:7px}
+.foot-cols a{font-size:13.5px;color:var(--fg-dim);transition:color .2s}
+.foot-cols a:hover{color:var(--fg)}
+.foot-bottom{
+  margin-top:32px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--fg-dim);
+}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:980px){
   .nav-links{display:none}
-  .menu-btn{display:block}
-  .preview-body{grid-template-columns:1fr}
-  .preview-side{border-right:0;border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto}
-  .preview-side .p-tab{flex:none}
+  .hero-grid{grid-template-columns:1fr;text-align:center;gap:44px}
+  .hero-text{max-width:100%;margin:0 auto}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-cta{justify-content:center}
+  .hero-visual{max-width:420px;margin:0 auto}
+  .hero h1{font-size:clamp(52px,12vw,96px)}
+  .cards{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:640px){
-  .wrap{width:calc(100% - 32px)}
-  .hero{padding:100px 0 40px}
-  .hero-cta .btn{flex:1}
-  .foot-grid{grid-template-columns:1fr 1fr}
-  .section{padding:56px 0}
+  .wrap{width:calc(100% - 2rem)}
+  .cards{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .hero-cta .btn{flex:1 1 auto}
+  .nav-inner{padding:5px 5px 5px 12px}
+  .brand span.name{display:none}
+  .btn-buy-nav{padding:0 11px;font-size:12.5px}
 }
-.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .hero h1{animation:none;background:var(--fg);-webkit-background-clip:unset;background-clip:unset;color:var(--fg)}
+  .rv{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
+
+<div class="bg" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+<div class="spot" id="spot" aria-hidden="true"></div>
+
 <header class="nav">
-  <div class="nav-in">
-    <a class="brand" href="#top"><img class="brand-logo" src="whiteshell_logo.png" alt="WhiteShell">WhiteShell</a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#feature">功能</a></li>
-        <li><a href="#help">帮助</a></li>
-        <li class="cwrap" id="cwrap">
-          <button class="cbtn" id="cbtn" aria-haspopup="true" aria-expanded="false">社区
-            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
-          </button>
-          <div class="cmenu" role="menu">
-            <a class="citem kook" href="#" data-kook target="_blank" rel="noopener"><i></i>KOOK 频道</a>
-            <a class="citem tg" href="#" data-tg target="_blank" rel="noopener"><i></i>Telegram 频道</a>
-          </div>
-        </li>
-        <li><a href="#" data-buy>购买</a></li>
-        <li><a href="#" data-dl>下载</a></li>
-      </ul>
+  <div class="nav-inner" id="navInner">
+    <a class="brand" href="#top">
+      <span class="mark"><img src="whiteshell_logo.png" alt="白壳科技"></span>
+      <span class="name">白壳科技</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#feature">功能</a>
+      <div class="community-wrap" id="communityWrap">
+        <button class="community-btn" id="communityBtn" type="button" aria-haspopup="true" aria-expanded="false">
+          社区
+          <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="community-menu" role="menu">
+          <a href="#" class="community-item kook" data-kook target="_blank" rel="noopener" role="menuitem">
+            <i class="dot"></i>KOOK 频道
+          </a>
+          <a href="#" class="community-item tg" data-tg target="_blank" rel="noopener" role="menuitem">
+            <i class="dot"></i>Telegram 频道
+          </a>
+        </div>
+      </div>
+      <a href="#help">帮助</a>
     </nav>
-    <div class="nav-right">
-      <button class="icon" id="themeBtn" aria-label="切换外观">
-        <svg id="themeIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></svg>
-      </button>
-      <a class="btn btn-p" style="padding:7px 16px;font-size:13px" href="#" data-dl>下载</a>
-      <button class="menu-btn" id="menuBtn" aria-label="菜单"><span></span><span></span><span></span></button>
+    <div class="nav-act">
+      <button class="icon-btn" id="themeBtn" aria-label="切换主题"></button>
+      <a class="btn btn-buy-nav btn-sm" href="#" data-buy target="_blank" rel="noopener">购买</a>
+      <a class="btn btn-solid btn-sm" href="#" data-dl>下载</a>
     </div>
   </div>
 </header>
-<div class="sheet" id="sheet">
-  <a href="#feature">功能</a>
-  <a href="#help">帮助</a>
-  <a href="#" data-buy>购买</a>
-  <a href="#" data-dl>下载</a>
-  <a href="#" data-kook target="_blank" rel="noopener">KOOK 频道</a>
-  <a href="#" data-tg target="_blank" rel="noopener">Telegram 频道</a>
-  <a href="#" data-doc="terms">用户协议</a>
-</div>
 
 <main id="top">
+
   <section class="hero">
-    <div class="wrap hero-in">
-      <p class="eyebrow">WhiteShell for Minecraft</p>
-      <h1>白壳科技</h1>
-      <p class="hero-sub">白壳科技是一款面向 <strong>《我的世界》中国版</strong> 的辅助模块。悬浮面板、战斗与移动增强、视觉渲染，在框架中启用即可。</p>
-      <div class="hero-cta">
-        <a class="btn btn-p" href="#" data-dl>下载模块</a>
-        <a class="btn btn-s" href="#feature">了解更多</a>
+    <div class="wrap hero-grid">
+      <div class="hero-text rv">
+        <h1>WhiteShell</h1>
+        <p class="hero-sub">白壳科技是一款面向 <b>《我的世界》中国版</b> 的辅助模块。悬浮面板、战斗与移动增强、视觉渲染，在框架中启用即可。</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#" data-dl>
+            <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0 4.5-4.5M12 15 7.5 10.5M5 20h14"/></svg>
+            下载模块
+          </a>
+          <a class="btn btn-line" href="#feature">看看功能</a>
+        </div>
       </div>
-      <p class="hero-note">基于 LSPosed · 免 Root 框架可用 · 单文件页面</p>
-      <div class="preview rv">
-        <div class="preview-bar"><i></i><i></i><i></i><span>白壳 · 悬浮面板</span></div>
-        <div class="preview-body">
-          <div class="preview-side">
-            <div class="p-tab on">战斗</div>
-            <div class="p-tab">移动</div>
-            <div class="p-tab">视觉</div>
-            <div class="p-tab">配置</div>
+
+      <div class="hero-visual rv" aria-hidden="true">
+        <div class="preview">
+          <div class="preview-head">
+            <span class="preview-dots"><i></i><i></i><i></i></span>
+            <span>白壳 · 悬浮面板</span>
           </div>
-          <div class="preview-main">
-            <h4>战斗辅助</h4>
-            <div class="p-row"><span>平滑瞄准</span><i class="sw on"></i></div>
-            <div class="p-row"><span>攻击节奏</span><i class="sw on"></i></div>
-            <div class="p-row"><span>距离判定</span><i class="sw"></i></div>
-            <div class="p-row"><span>自动疾跑</span><i class="sw on"></i></div>
-            <div class="p-row"><span>视角稳定</span><i class="sw on"></i></div>
+          <div class="preview-tabs">
+            <span class="on">战斗</span>
+            <span>移动</span>
+            <span>视觉</span>
+            <span>配置</span>
+          </div>
+          <div class="preview-list">
+            <div class="preview-row"><span>平滑瞄准</span><i class="sw on"></i></div>
+            <div class="preview-row"><span>攻击节奏</span><i class="sw on"></i></div>
+            <div class="preview-row"><span>距离判定</span><i class="sw"></i></div>
+            <div class="preview-row"><span>自动疾跑</span><i class="sw on"></i></div>
+            <div class="preview-row"><span>视角稳定</span><i class="sw on"></i></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <section class="section" id="feature">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <h2>功能模块</h2>
+
+    <div class="strip" aria-hidden="true">
+      <div class="strip-track" id="strip">
+        <span>悬浮面板</span>
+        <span>点击唤出</span>
+        <span>LSPosed</span>
+        <span>自由拖拽</span>
+        <span>独立开关</span>
+        <span>配置保存</span>
+        <span>实时生效</span>
+        <span>轻量</span>
       </div>
-      <div class="tiles rv">
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8Z"/></svg></span>
+    </div>
+  </section>
+
+  <section class="sec" id="feature">
+    <div class="wrap">
+      <div class="bento-head rv">
+        <h2 class="h2">包含的<br><em>功能模块</em></h2>
+        <p class="lead">按需开启，随时关闭。</p>
+      </div>
+
+      <div class="cards" data-stagger>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8Z"/></svg></div>
           <h3>战斗辅助</h3>
           <p>平滑瞄准曲线、距离判定、攻击节奏全部可调。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/><circle cx="12" cy="7" r="3.5"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/><circle cx="12" cy="7" r="3.5"/></svg></div>
           <h3>移动增强</h3>
           <p>自动疾跑、跳跃优化、爬升辅助，赶路更顺。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <h3>视觉渲染</h3>
           <p>夜视、亮度调节、实体高亮与自定义配色。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></div>
           <h3>悬浮面板</h3>
           <p>悬浮球唤出，面板自由拖动，位置大小自动记忆。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17 9.4a3.6 3.6 0 0 1-.6 8.6H7Z"/></svg></div>
           <h3>配置同步</h3>
           <p>配置可导出 / 导入，换设备无需重设。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div>
           <h3>一键预设</h3>
           <p>预设组合，战斗 / 生存场景之间快速切换。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M4 12h3l2-6 4 12 2-6h5"/></svg></div>
           <h3>参数调试</h3>
           <p>滑块式可视调整，实时预览，改完立即生效。</p>
-        </div>
-        <div class="tile">
-          <span class="tile-ico"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13l0-8Z"/></svg></span>
+        </article>
+
+        <article class="card">
+          <div class="k"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg></div>
           <h3>实时生效</h3>
           <p>所有改动立即作用到游戏内，无需重启。</p>
-        </div>
+        </article>
+
       </div>
     </div>
   </section>
-  <section class="section" id="help">
+
+  <section class="sec" id="help">
     <div class="wrap">
-      <div class="sec-head rv">
-        <h2>帮助</h2>
+      <div class="bento-head rv">
+        <h2 class="h2">帮助</h2>
       </div>
-      <div class="faq rv">
-        <div class="faq-item">
-          <button class="faq-q">如何安装？
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-a"><p>白壳科技是一个 Xposed 模块，使用 LSPosed 或其他免 Root 框架注入即可使用，无需卸载官方版本。首次使用需在框架中勾选本模块并重启游戏。</p></div>
+      <div class="faq-grid rv" data-stagger>
+        <div class="faq-card">
+          <h3>如何安装？</h3>
+          <p>白壳科技是一个 Xposed 模块，使用 LSPosed 或其他免 Root 框架注入即可使用，无需卸载官方版本。首次使用需在框架中勾选本模块并重启游戏。</p>
         </div>
-        <div class="faq-item">
-          <button class="faq-q">需要哪些权限？
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-a"><p>首次启动需授予悬浮窗权限，以便面板能够浮于游戏之上；配置导出 / 导入时需要存储权限。</p></div>
+        <div class="faq-card">
+          <h3>需要哪些权限？</h3>
+          <p>首次启动需授予悬浮窗权限，以便面板能够浮于游戏之上；配置导出 / 导入时需要存储权限。</p>
         </div>
-        <div class="faq-item">
-          <button class="faq-q">使用会被封号吗？
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-a"><p>第三方模块在公共服务器使用可能违反该服务器规定，风险需自行承担。建议仅在单机或私服使用。</p></div>
+        <div class="faq-card">
+          <h3>使用会被封号吗？</h3>
+          <p>第三方模块在公共服务器使用可能违反该服务器规定，风险需自行承担。建议仅在单机或私服使用。</p>
         </div>
-        <div class="faq-item">
-          <button class="faq-q">官方社区在哪？
-            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-a"><p>我们同时运营 KOOK 和 Telegram 频道，用于发布更新与收集反馈。如遇任何问题，也可直接联系管理员处理。</p></div>
+        <div class="faq-card">
+          <h3>官方社区在哪？</h3>
+          <p>我们同时运营 <a href="#" data-kook target="_blank" rel="noopener">KOOK</a> 和 <a href="#" data-tg target="_blank" rel="noopener">Telegram</a> 频道，用于发布更新与收集反馈。如遇任何问题，也可直接联系管理员处理。</p>
         </div>
       </div>
     </div>
   </section>
-  <section class="cta">
-    <div class="wrap rv">
-      <h2>开始你的白壳体验</h2>
-      <p>下载模块，注入框架，进入游戏即可。</p>
-      <div class="hero-cta">
-        <a class="btn btn-p" href="#" data-dl>下载模块</a>
-        <a class="btn btn-s" href="#" data-buy>购买激活码</a>
+
+  <section class="sec" id="start">
+    <div class="wrap">
+      <div class="end rv">
+        <h2>开始你的白壳体验</h2>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#" data-dl>
+            <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0 4.5-4.5M12 15 7.5 10.5M5 20h14"/></svg>
+            下载模块
+          </a>
+          <a class="btn btn-line" href="#" data-buy target="_blank" rel="noopener">购买激活码</a>
+        </div>
       </div>
     </div>
   </section>
+
 </main>
-<footer class="foot">
+
+<footer>
   <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a class="brand" href="#top"><i>W</i>白壳科技</a>
+    <div class="foot">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <span class="mark"><img src="whiteshell_logo.png" alt="白壳科技"></span>
+          <span class="name">白壳科技</span>
+        </a>
         <p>《我的世界》中国版辅助模块。</p>
       </div>
-      <div>
-        <h4>产品</h4>
-        <ul>
-          <li><a href="#feature">功能</a></li>
-          <li><a href="#help">帮助</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>购买</h4>
-        <ul>
-          <li><a href="#" data-buy>购买激活码</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>社区</h4>
-        <ul>
-          <li><a href="#" data-kook target="_blank" rel="noopener">KOOK 频道</a></li>
-          <li><a href="#" data-tg target="_blank" rel="noopener">Telegram 频道</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>协议</h4>
-        <ul>
-          <li><button data-doc="terms">用户协议</button></li>
-          <li><button data-doc="privacy">使用协议</button></li>
-        </ul>
+      <div class="foot-cols">
+        <div>
+          <h4>产品</h4>
+          <ul>
+            <li><a href="#feature">功能</a></li>
+            <li><a href="#help">帮助</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>购买</h4>
+          <ul>
+            <li><a href="#" data-buy target="_blank" rel="noopener">购买激活码</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>社区</h4>
+          <ul>
+            <li><a href="#" data-kook target="_blank" rel="noopener">KOOK 频道</a></li>
+            <li><a href="#" data-tg target="_blank" rel="noopener">Telegram 频道</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>协议</h4>
+          <ul>
+            <li><a href="#" data-doc="user">用户协议</a></li>
+            <li><a href="#" data-doc="use">使用协议</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2024 – 2026 白壳科技 WhiteShell</span>
-      <button data-doc="terms">协议</button>
+      <span>© 2024 – 2026 白壳科技</span>
     </div>
   </div>
 </footer>
 
-<div class="modal" id="modal" hidden>
-  <div class="modal-mask" data-close></div>
-  <div class="modal-box" role="dialog" aria-modal="true">
-    <div class="modal-head">
-      <h3 id="modalTitle">协议</h3>
-      <button class="icon" data-close aria-label="关闭">
-        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-  </div>
-</div>
-<div id="toast" role="status"></div>
-
 <script>
 (function(){
   'use strict';
-  var $  = function(s,c){return (c||document).querySelector(s)};
-  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
 
   var root = document.documentElement;
-  var themeBtn = $('#themeBtn');
+  var themeBtn = document.getElementById('themeBtn');
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  var SUN  = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  var MOON = '<svg viewBox="0 0 24 24"><path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a7 7 0 0 0 11.1 11.1Z"/></svg>';
+
   function setTheme(t){
-    root.setAttribute('data-theme', t);
-    try{localStorage.setItem('ws-t', t)}catch(e){}
-    var m = $('meta[name="theme-color"]');
-    if(m) m.setAttribute('content', t === 'dark' ? '#000000' : '#ffffff');
+    root.dataset.theme = t;
+    themeBtn.innerHTML = t === 'dark' ? SUN : MOON;
+    themeBtn.setAttribute('aria-label', t === 'dark' ? '切换到浅色' : '切换到深色');
+    if(themeMeta) themeMeta.setAttribute('content', t === 'dark' ? '#08080a' : '#f3f3ef');
   }
+  setTheme(root.dataset.theme || 'dark');
   themeBtn.addEventListener('click', function(){
-    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    try{ localStorage.setItem('ws-t', next); }catch(e){}
   });
 
-  var cwrap = $('#cwrap'), cbtn = $('#cbtn');
-  if(cbtn){
-    cbtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = cwrap.classList.toggle('open');
-      cbtn.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', function(){
-      cwrap.classList.remove('open');
-      cbtn.setAttribute('aria-expanded','false');
-    });
-  }
+  var communityWrap = document.getElementById('communityWrap');
+  var communityBtn  = document.getElementById('communityBtn');
+  var communityMenu = communityWrap.querySelector('.community-menu');
 
-  var menuBtn = $('#menuBtn'), sheet = $('#sheet');
-  function closeSheet(){
-    if(!sheet) return;
-    sheet.classList.remove('open');
-    if(menuBtn) menuBtn.classList.remove('open');
-    document.body.style.overflow = '';
+  function openMenu(){
+    communityWrap.classList.add('open');
+    communityBtn.setAttribute('aria-expanded', 'true');
   }
-  if(menuBtn){
-    menuBtn.addEventListener('click', function(){
-      var open = sheet.classList.toggle('open');
-      menuBtn.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    $$('#sheet a').forEach(function(a){
-      a.addEventListener('click', function(){
-        closeSheet();
-      });
-    });
+  function closeMenu(){
+    communityWrap.classList.remove('open');
+    communityBtn.setAttribute('aria-expanded', 'false');
   }
-
-  $$('.faq-q').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var item = btn.parentNode;
-      var ans  = $('.faq-a', item);
-      var open = item.classList.toggle('open');
-      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0px';
-    });
+  communityBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    communityWrap.classList.contains('open') ? closeMenu() : openMenu();
   });
-
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-      });
-    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
-    $$('.rv').forEach(function(el){ io.observe(el); });
-  } else {
-    $$('.rv').forEach(function(el){ el.classList.add('in'); });
-  }
-
-  var toastEl = $('#toast'), toastTimer;
-  function toast(msg){
-    toastEl.textContent = msg;
-    toastEl.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
-  }
-
-  $$('[data-dl]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      var href = a.getAttribute('href');
-      if(!href || href === '#'){
-        e.preventDefault();
-        toast('下载链接尚未配置');
-        return;
-      }
-      try{
-        var u = new URL(href, location.href);
-        u.searchParams.set('v', Date.now());
-        a.href = u.href;
-      }catch(err){}
-    });
-  });
-  $$('[data-buy]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      if(a.getAttribute('href') === '#'){
-        e.preventDefault();
-        toast('购买链接尚未配置');
-      }
-    });
-  });
-  $$('[data-kook]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      if(a.getAttribute('href') === '#'){
-        e.preventDefault();
-        toast('KOOK 链接尚未配置');
-      }
-    });
-  });
-  $$('[data-tg]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      if(a.getAttribute('href') === '#'){
-        e.preventDefault();
-        toast('Telegram 链接尚未配置');
-      }
-    });
-  });
-
-  var modal = $('#modal'), modalTitle = $('#modalTitle'), modalBody = $('#modalBody');
-  var docs = {
-    terms: {
-      title: '用户协议',
-      html: '<p>最后更新：2026 年 1 月</p>'+
-            '<h4>1. 服务说明</h4>'+
-            '<p>白壳科技 WhiteShell 是面向《我的世界》中国版的辅助模块，仅供学习、研究与个人测试使用。</p>'+
-            '<h4>2. 使用风险</h4>'+
-            '<p>在公共服务器使用第三方模块可能违反服务器规则，由此产生的账号风险由使用者自行承担。</p>'+
-            '<h4>3. 禁止行为</h4>'+
-            '<ul><li>不得将本模块用于破坏游戏公平性的商业用途。</li><li>不得逆向、转售或冒充官方发布修改版本。</li><li>不得利用本模块从事违法违规活动。</li></ul>'+
-            '<h4>4. 免责声明</h4>'+
-            '<p>本项目按现状提供，不对因使用或无法使用本模块造成的任何损失承担责任。</p>'
-    },
-    privacy: {
-      title: '使用协议',
-      html: '<p>最后更新：2026 年 1 月</p>'+
-            '<h4>1. 本地数据</h4>'+
-            '<p>模块配置、面板位置与主题偏好仅保存在本地设备，不会主动上传。</p>'+
-            '<h4>2. 权限说明</h4>'+
-            '<p>悬浮窗权限用于显示游戏内面板；存储权限用于导入和导出配置文件。</p>'+
-            '<h4>3. 第三方服务</h4>'+
-            '<p>页面中的 KOOK、Telegram 与下载链接可能跳转到第三方平台，其数据处理遵循对应平台规则。</p>'+
-            '<h4>4. 协议更新</h4>'+
-            '<p>本协议可能随版本更新调整，继续使用即视为接受更新后的内容。</p>'
-    }
-  };
-
-  function openDoc(key){
-    var doc = docs[key];
-    if(!doc) return;
-    modalTitle.textContent = doc.title;
-    modalBody.innerHTML = doc.html;
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal(){
-    modal.hidden = true;
-    if(!sheet || !sheet.classList.contains('open')) document.body.style.overflow = '';
-  }
-  $$('[data-doc]').forEach(function(el){
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      closeSheet();
-      openDoc(el.getAttribute('data-doc'));
-    });
-  });
-  $$('[data-close]', modal).forEach(function(el){
-    el.addEventListener('click', closeModal);
+  document.addEventListener('click', function(e){
+    if(!communityWrap.contains(e.target)) closeMenu();
   });
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){
-      closeModal();
-      cwrap.classList.remove('open');
-      if(cbtn) cbtn.setAttribute('aria-expanded','false');
+    if(e.key === 'Escape') closeMenu();
+  });
+  communityMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      setTimeout(closeMenu, 60);
+    });
+  });
+
+  var navInner = document.getElementById('navInner');
+  var lastY = 0;
+  var ticking = false;
+  var scrollTimer = 0;
+
+  function markScrolling(){
+    navInner.classList.add('scrolling');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function(){
+      navInner.classList.remove('scrolling');
+    }, 180);
+  }
+  function onScroll(){
+    var y = window.scrollY;
+    if(Math.abs(y - lastY) < 3){ ticking = false; return; }
+    lastY = y;
+    navInner.classList.toggle('compact', y > 40);
+    markScrolling();
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    markScrolling();
+    if(!ticking){ requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('touchstart', markScrolling, { passive: true });
+  window.addEventListener('touchmove',  markScrolling, { passive: true });
+
+  var spot = document.getElementById('spot');
+  var sx = 0, sy = 0, cx = 0, cy = 0, spotOn = false;
+  window.addEventListener('pointermove', function(e){
+    if(e.pointerType !== 'mouse') return;
+    sx = e.clientX; sy = e.clientY;
+    if(!spotOn){ spotOn = true; spot.style.opacity = '1'; }
+  }, { passive: true });
+  (function follow(){
+    cx += (sx - cx) * 0.12;
+    cy += (sy - cy) * 0.12;
+    spot.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(follow);
+  })();
+
+  document.querySelectorAll('.card').forEach(function(cell){
+    cell.addEventListener('pointermove', function(e){
+      var r = cell.getBoundingClientRect();
+      cell.style.setProperty('--cx', (e.clientX - r.left) + 'px');
+      cell.style.setProperty('--cy', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  });
+
+  document.querySelectorAll('[data-stagger]').forEach(function(g){
+    Array.prototype.forEach.call(g.children, function(el, i){
+      el.classList.add('rv');
+      el.style.transitionDelay = Math.min(i * 0.06, 0.3) + 's';
+    });
+  });
+  var rvs = document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    rvs.forEach(function(el){ io.observe(el); });
+  }else{
+    rvs.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  var strip = document.getElementById('strip');
+  if(strip){ strip.innerHTML += strip.innerHTML; }
+
+  var toastEl = document.createElement('div');
+  toastEl.style.cssText = 'position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);padding:11px 20px;border:1px solid var(--line-2);border-radius:999px;background:var(--card);font-size:13.5px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;z-index:300;max-width:calc(100vw - 32px);text-align:center;';
+  document.body.appendChild(toastEl);
+  var tt;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.style.opacity = '1';
+    toastEl.style.transform = 'translate(-50%,0)';
+    clearTimeout(tt);
+    tt = setTimeout(function(){
+      toastEl.style.opacity = '0';
+      toastEl.style.transform = 'translate(-50%,16px)';
+    }, 2600);
+  }
+
+  document.addEventListener('click', function(e){
+    var dl = e.target.closest('[data-dl]');
+    if(dl){
+      var h = dl.getAttribute('href');
+      if(!h || h === '#'){ e.preventDefault(); toast('下载地址尚未配置'); }
+      return;
+    }
+    var buy = e.target.closest('[data-buy]');
+    if(buy){
+      var b = buy.getAttribute('href');
+      if(!b || b === '#'){ e.preventDefault(); toast('购买地址尚未配置'); }
+      return;
+    }
+    var kook = e.target.closest('[data-kook]');
+    if(kook){
+      var k = kook.getAttribute('href');
+      if(!k || k === '#'){ e.preventDefault(); toast('KOOK 频道链接尚未配置'); }
+      return;
+    }
+    var tg = e.target.closest('[data-tg]');
+    if(tg){
+      var t = tg.getAttribute('href');
+      if(!t || t === '#'){ e.preventDefault(); toast('Telegram 频道链接尚未配置'); }
+      return;
+    }
+    var doc = e.target.closest('[data-doc]');
+    if(doc){
+      e.preventDefault();
+      toast(doc.dataset.doc === 'user' ? '用户协议页面待接入' : '使用协议页面待接入');
     }
   });
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length < 2) return;
+      var t = document.querySelector(id);
+      if(!t) return;
+      e.preventDefault();
+      var y = t.getBoundingClientRect().top + window.scrollY - 84;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+
 })();
 </script>
 </body>
