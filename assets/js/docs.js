@@ -16,7 +16,7 @@ window.WS.docs = {
       + '<ul><li>WhiteShell 模块使用授权，含后续版本更新；</li><li>官方频道内的安装指导与问题排查；</li><li>可选的进阶配置与定制服务。</li></ul>'
       + '<h4>三、售后说明</h4>'
       + '<p>购买后如遇使用问题，可在官方频道提交工单，管理员会尽快协助处理。</p>'
-      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="#" data-kook target="_blank" rel="noopener">前往 KOOK 频道选购</a></div>'
+      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="https://kook.vip/vp71ue" data-kook target="_blank" rel="noopener">前往 KOOK 频道选购</a></div>'
   },
 
   user: {
