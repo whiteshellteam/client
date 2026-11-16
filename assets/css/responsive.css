@@ -1,0 +1,45 @@
+/* ==========================================================================
+   WhiteShell · Responsive
+   断点适配（1000 / 900 / 860 / 700 / 560）与无障碍降级。
+   ========================================================================== */
+@media (max-width:1000px){.advantages{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero{text-align:center;padding-top:60px}
+  .hero-text{max-width:100%;margin-inline:auto;align-items:center}
+  .hero h1{font-size:clamp(42px,9vw,72px)}
+  .hero-actions{justify-content:center}
+  .hero-visual{max-width:420px;margin-inline:auto;height:350px}
+  .mc-block.b1 { width: 100px; left: 0; top: 5%; }
+  .mc-block.b2 { width: 80px; right: 5%; top: 0; }
+  .mc-block.b3 { width: 110px; left: 15%; bottom: 15%; }
+  .mc-block.b4 { width: 70px; right: 15%; bottom: 25%; }
+  .mc-block.b5 { width: 50px; left: 5%; top: 45%; }
+  .mc-block.b6 { width: 80px; right: 0; bottom: 0; }
+  .mc-block.b7 { width: 60px; left: 55%; top: 0; }
+  .mc-block.b8 { width: 70px; right: 35%; top: 35%; }
+}
+@media (max-width:860px){.nav-links{display:none}.nav-act{display:none}.menu-btn{display:grid}}
+@media (max-width:700px){
+  .wrap{width:calc(100% - 40px)}
+  .foot{flex-direction:column;gap:32px}
+  .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .hero-actions{gap:16px}
+  .end .hero-actions .btn-pill{flex:1 1 auto}
+  .nav-inner{width:calc(100% - 32px)}
+}
+@media (max-width:560px){
+  .faq summary{font-size:15.5px}
+  .faq .ans{padding-right:14px;font-size:14px}
+  .modal,.log-modal{place-items:end center;padding:0}
+  .modal-box,.log-box{width:100%;max-height:82vh;border-radius:16px 16px 0 0;border-bottom:0;animation:sheet-up .3s var(--ease)}
+  .modal-box{padding-bottom:env(safe-area-inset-bottom)}
+  .modal-box::before{content:"";display:block;width:36px;height:4px;margin:8px auto 0;border-radius:99px;background:var(--line2)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .orb,.hero h1,.hero .sub,.hero-actions,.hero-visual,.mc-block{animation:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .modal-box,.log-box{animation:none}
+}

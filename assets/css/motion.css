@@ -1,0 +1,15 @@
+/* ==========================================================================
+   WhiteShell · Motion
+   关键帧动画与滚动入场效果；遵循 prefers-reduced-motion。
+   ========================================================================== */
+@keyframes orb-a{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4vw,5vh,0) scale(1.1)}}
+@keyframes orb-b{from{transform:translate3d(0,0,0) scale(1.05)}to{transform:translate3d(-4vw,6vh,0) scale(.92)}}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-20px) rotate(6deg); }
+}
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes sheet-up{from{transform:translateY(28px);opacity:.7}to{transform:none;opacity:1}}
