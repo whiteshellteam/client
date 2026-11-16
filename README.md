@@ -20,7 +20,7 @@
 │   │   └── pages.css       # 独立页面（404）
 │   ├── js
 │   │   ├── core.js         # window.WS 命名空间与工具函数
-│   │   ├── docs.js         # 弹窗文案数据（协议、选购商品）
+│   │   ├── docs.js         # 弹窗文案数据（选购商品）
 │   │   ├── toast.js        # 底部轻提示
 │   │   ├── theme.js        # 亮/暗主题切换
 │   │   ├── nav.js          # 下拉菜单、移动端抽屉、锚点滚动
@@ -45,7 +45,7 @@
 | 主色、圆角、字体栈 | `assets/css/tokens.css` |
 | 导航、首屏、页脚结构 | `index.html` + `assets/css/layout.css` |
 | 按钮、卡片、弹窗样式 | `assets/css/components.css` |
-| 协议 / 选购商品文案 | `assets/js/docs.js` |
+| 选购商品文案 | `assets/js/docs.js` |
 | 下载、KOOK、Telegram 链接 | 把对应 `href="#"` 换成真实链接即可（未配置时点击会弹提示） |
 | 右侧方块 | 换 `assets/img/blocks/` 里的图，或改 `index.html` 里 `.mc-block` 的 `src` |
 | 断点与移动端细节 | `assets/css/responsive.css` |
