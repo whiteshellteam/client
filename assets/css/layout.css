@@ -12,9 +12,14 @@
 /* ================= 方案一：传统专业全宽导航栏 ================= */
 .nav{
   position:sticky;top:0;z-index:1000;width:100%;
+  background:var(--bg);
+  border-bottom:1px solid transparent;
+  transition:background-color .35s ease,border-color .35s ease;
+}
+.nav.is-scrolled{
   background:var(--nav);
+  border-bottom-color:var(--line);
   -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--line);
 }
 .nav-inner{
   display:flex;align-items:center;gap:8px;

@@ -73,6 +73,18 @@
     });
   }
 
+  /** 顶部为纯色，向下滚动后切换为毛玻璃 */
+  function initScrollState() {
+    var nav = document.getElementById('nav');
+    if (!nav) return;
+
+    function update() {
+      nav.classList.toggle('is-scrolled', window.scrollY > 4);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
   function initAnchors() {
     if (!sheet) return;
     WS.$$('a[href^="#"]', sheet).forEach(function (link) {
@@ -100,6 +112,7 @@
       initDropdown();
       initSheet();
       initAnchors();
+      initScrollState();
     }
   };
 })(window.WS);

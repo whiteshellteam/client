@@ -7,7 +7,7 @@
   'use strict';
 
   var root = document.documentElement;
-  var meta = document.querySelector('meta[name="theme-color"]');
+  var metas = Array.prototype.slice.call(document.querySelectorAll('meta[name="theme-color"]'));
 
   /* 图标取自 Lucide（ISC 许可） */
   var ICON_SUN = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
@@ -26,7 +26,8 @@
       btn.setAttribute('aria-label', label);
     });
 
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff');
+    var color = theme === 'dark' ? '#000000' : '#ffffff';
+    metas.forEach(function (m) { m.setAttribute('content', color); });
   }
 
   function current() {
