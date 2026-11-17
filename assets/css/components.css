@@ -107,6 +107,38 @@
 .log-foot b{color:var(--text);font-weight:600}
 
 /* 提示条 */
+/* KOOK 引流卡片 */
+.kook-card{
+  position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:2800;
+  display:flex;align-items:center;gap:12px;
+  width:min(372px,calc(100vw - 32px));padding:12px 14px;
+  border-radius:14px;background:var(--bg);border:1px solid var(--line);
+  box-shadow:0 18px 44px -26px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .24s ease,transform .24s var(--ease);
+}
+.kook-card.show{opacity:1;transform:none;pointer-events:auto}
+.kook-icon{width:40px;height:40px;border-radius:10px;object-fit:cover;flex:none;background:var(--fill)}
+.kook-text{flex:1;min-width:0}
+.kook-title{font-size:13.5px;font-weight:600;line-height:1.4;color:var(--text)}
+.kook-meta{margin-top:2px;font-size:12px;line-height:1.4;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kook-join{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;
+  height:32px;padding:0 14px;border-radius:8px;
+  background:var(--btn-grad);color:#fff;font-size:13px;font-weight:500;
+  transition:background .2s ease;
+}
+.kook-join:hover{background:var(--btn-grad-hover)}
+.kook-close{
+  flex:none;width:24px;height:24px;border-radius:6px;
+  display:grid;place-items:center;color:var(--text3);
+  transition:background-color .2s ease,color .2s ease;
+}
+.kook-close:hover{color:var(--text);background:var(--fill)}
+.kook-close svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+/* 卡片出现时把提示条抬高，避免重叠 */
+body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
+
 /* Toast：扁平提示（无阴影、无模糊、无描边） */
 #toast{
   position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:3000;

@@ -27,6 +27,7 @@
       WS.nav.closeSheet();
       WS.dialog.close();
       WS.dialog.closeLog();
+      if (WS.kook) WS.kook.dismiss(7);
     });
   }
 
@@ -38,6 +39,7 @@
     WS.links.init();
     WS.effects.init();
     WS.monitor.init();
+    WS.kook.init();
     lockGestures();
     bindEscape();
   }

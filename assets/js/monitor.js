@@ -55,7 +55,10 @@
       var url = target.src || target.href || target.currentSrc || '';
       var fileName = url ? url.split('/').pop().split('?')[0] : '';
 
-      if (tag === 'img') add('图片', target.alt || fileName || '未命名图片', url);
+      if (tag === 'img') {
+        if (target.hasAttribute('data-optional')) return; // 第三方头像等非必需资源
+        add('图片', target.alt || fileName || '未命名图片', url);
+      }
       else if (tag === 'script') add('脚本', fileName || '未命名脚本', url);
       else if (tag === 'link') add('样式表', fileName || '未命名样式', url);
     }, true);
