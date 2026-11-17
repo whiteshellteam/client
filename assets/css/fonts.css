@@ -12,7 +12,14 @@
   font-display:swap;
 }
 
-/* MiSans：正文 400 + 标题 600 */
+/* MiSans：大标题 300 + 正文 400 + 强调 600 */
+@font-face{
+  font-family:"MiSans";
+  src:url("../fonts/misans-300.woff2") format("woff2");
+  font-weight:300;
+  font-style:normal;
+  font-display:swap;
+}
 @font-face{
   font-family:"MiSans";
   src:url("../fonts/misans-400.woff2") format("woff2");
