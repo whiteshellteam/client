@@ -6,6 +6,18 @@
 window.WS = window.WS || {};
 
 window.WS.docs = {
+  settings: {
+    title: '设置',
+    body: ''
+      + '<div class="setting-row">'
+      +   '<div>'
+      +     '<p class="setting-name">深色模式</p>'
+      +     '<p class="setting-desc">切换站点的亮色 / 深色外观</p>'
+      +   '</div>'
+      +   '<button class="switch" type="button" role="switch" aria-checked="false" aria-label="深色模式" data-theme-switch></button>'
+      + '</div>'
+  },
+
   other: {
     title: '其他问题',
     body: ''

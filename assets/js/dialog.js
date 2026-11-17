@@ -16,6 +16,7 @@
     modal.classList.toggle('is-bare', !!bare);
     if (title) titleEl.textContent = title;
     bodyEl.innerHTML = html;
+    if (WS.theme && WS.theme.sync) WS.theme.sync();
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     if (boxEl) boxEl.scrollTop = 0;
