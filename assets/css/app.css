@@ -1,0 +1,586 @@
+
+/* ===== tokens.css ===== */
+/* ==========================================================================
+   WhiteShell · Design Tokens
+   颜色 / 字体 / 圆角 / 动效曲线等全局变量，亮暗两套主题在此定义。
+   ========================================================================== */
+:root{
+  color-scheme: light;
+  --font-sans:"Inter","MiSans","PingFang SC","HarmonyOS Sans SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  --font-system:"Inter","PingFang SC","HarmonyOS Sans SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  --font-en:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --bg:#ffffff;
+  --bg2:#f5f5f7;
+  --elev:#ffffff;
+  --card:#f5f5f7;
+  --text:#1d1d1f;
+  --text2:#6e6e73;
+  --text3:#86868b;
+  --line:rgba(0,0,0,.1);
+  --line2:rgba(0,0,0,.2);
+  --fill:rgba(0,0,0,.05);
+  --fill2:rgba(0,0,0,.09);
+  --blue:#0071e3;
+  --blue2:#0077ed;
+  --nav:rgba(255,255,255,.72);
+  --halo:rgba(110,150,255,.18);
+  --orb1:rgba(120,150,255,.14);
+  --orb2:rgba(90,200,255,.09);
+  --shadow:0 44px 90px -46px rgba(0,0,0,.3);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --max:1080px;
+  --radius:12px;
+  --kook-green:#87eb00;
+  --kook-green-2:#79d600;
+  --toast-bg:#1c1c1e;
+  --toast-fg:#f5f5f7;
+}
+[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#131315;
+  --bg2:#1d1d1f;
+  --elev:#1e1e20;
+  --card:#1d1d1f;
+  --text:#f5f5f7;
+  --text2:#a1a1a6;
+  --text3:#86868b;
+  --line:rgba(255,255,255,.14);
+  --line2:rgba(255,255,255,.28);
+  --fill:rgba(255,255,255,.1);
+  --fill2:rgba(255,255,255,.16);
+  --blue:#0A84FF;
+  --blue2:#3D9BFF;
+  --nav:rgba(19,19,21,.72);
+  --halo:rgba(60,120,255,.26);
+  --orb1:rgba(70,110,255,.16);
+  --orb2:rgba(40,170,230,.08);
+  --shadow:0 44px 90px -46px rgba(0,0,0,.95);
+  --kook-green:#87eb00;
+  --kook-green-2:#79d600;
+  --toast-bg:#2c2c2e;
+  --toast-fg:#f5f5f7;
+}
+
+/* ===== base.css ===== */
+/* ==========================================================================
+   WhiteShell · Base
+   重置、排版基线、可访问性焦点样式与页面容器。
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px;touch-action:pan-x pan-y}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-sans);
+  font-size:16px;font-weight:400;line-height:1.5;overflow-x:hidden;touch-action:pan-x pan-y;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  transition:background-color .5s ease,color .5s ease;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+::selection{background:rgba(0,113,227,.25)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+.wrap{width:min(var(--max),100% - 48px);margin-inline:auto}
+
+/* ===== layout.css ===== */
+/* ==========================================================================
+   WhiteShell · Layout
+   页面骨架：背景光晕、顶部导航、移动端抽屉、首屏、方块视觉、分区与页脚。
+   ========================================================================== */
+/* 背景光晕层 */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--bg);transition:background-color .5s ease}
+.orb{position:absolute;border-radius:50%;will-change:transform}
+.orb.a{width:min(86vmax,840px);height:min(86vmax,840px);left:-30vmax;top:-38vmax;background:radial-gradient(closest-side,var(--orb1),transparent 70%);animation:orb-a 50s ease-in-out infinite alternate}
+.orb.b{width:min(70vmax,740px);height:min(70vmax,740px);right:-26vmax;top:10vmax;background:radial-gradient(closest-side,var(--orb2),transparent 72%);animation:orb-b 62s ease-in-out infinite alternate}
+
+/* 顶部导航 */
+/* ================= 方案一：传统专业全宽导航栏 ================= */
+.nav{
+  position:sticky;top:0;z-index:1000;width:100%;
+  background:var(--bg);
+  border-bottom:1px solid transparent;
+  transition:background-color .35s ease,border-color .35s ease;
+}
+.nav.is-scrolled{
+  background:var(--nav);
+  border-bottom-color:var(--line);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
+}
+.nav-inner{
+  display:flex;align-items:center;gap:8px;
+  width:min(var(--max),100% - 48px);margin-inline:auto;
+  height:52px;
+}
+.brand{display:flex;align-items:center;flex:none;gap:9px}
+.mark{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;overflow:hidden;flex:none}
+.mark img{width:100%;height:100%;object-fit:contain;display:block;border-radius:8px}
+.brand-name{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;color:var(--text)}
+
+/* 导航项：shadcn/ui NavigationMenu 触发器样式 */
+.nav-links{display:flex;align-items:center;gap:6px;margin-left:auto}
+.nav-links > a,.community-btn{
+  display:flex;align-items:center;gap:4px;height:32px;padding:0 10px;border-radius:8px;
+  font-size:13.5px;font-weight:500;color:var(--text2);white-space:nowrap;
+  transition:background-color .2s ease,color .2s ease;
+}
+.nav-links > a:hover,.community-btn:hover{color:var(--text);background:var(--fill)}
+.cwrap.open .community-btn{color:var(--text);background:var(--fill)}
+.nav-act{display:flex;align-items:center;gap:14px;margin-left:24px}
+
+/* 汉堡按钮 */
+.menu-btn{display:none;position:relative;width:32px;height:32px;border-radius:50%;color:var(--text);flex:none;margin-left:auto}
+.menu-btn span{position:absolute;left:9px;width:14px;height:1.5px;border-radius:2px;background:currentColor;transition:transform .45s var(--ease),opacity .25s ease}
+.menu-btn span:nth-child(1){top:10.75px}
+.menu-btn span:nth-child(2){top:15.25px}
+.menu-btn span:nth-child(3){top:19.75px}
+.menu-btn.open span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(.3)}
+.menu-btn.open span:nth-child(3){transform:translateY(-4.5px) rotate(-45deg)}
+
+/* 移动端抽屉 */
+/* 移动端抽屉：紧凑列表（密度参考 shadcn/ui nav / Radix NavigationMenu） */
+.sheet{
+  position:fixed;inset:0;z-index:900;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  background:var(--bg);
+  padding:64px 22px 32px;
+  padding:calc(64px + env(safe-area-inset-top)) 22px calc(32px + env(safe-area-inset-bottom));
+  opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease;
+}
+.sheet.open{opacity:1;visibility:visible}
+.sheet-list{display:grid;gap:4px;margin-top:4px}
+.sheet-list > a{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 12px;border-radius:12px;
+  font-size:16.5px;font-weight:500;line-height:1.4;letter-spacing:-.01em;
+  transition:background .2s ease,color .2s ease;
+}
+.sheet-list > a::after{
+  content:"";width:6px;height:6px;flex:none;margin-right:4px;
+  border-right:1.6px solid var(--text3);border-bottom:1.6px solid var(--text3);
+  transform:rotate(-45deg);transition:transform .2s var(--ease),border-color .2s ease;
+}
+.sheet-list > a:hover,.sheet-list > a:active{background:var(--fill)}
+.sheet-list > a:hover::after{transform:rotate(-45deg) translate(2px,2px);border-color:var(--text)}
+.sheet .sub{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.sheet .sub a{font-size:14px;font-weight:400;color:var(--text2);transition:color .2s}
+.sheet .sub a:hover{color:var(--text)}
+.sheet-foot{display:flex;align-items:center;gap:10px;margin-top:26px;font-size:14px;font-weight:400;color:var(--text2)}
+.sheet-foot .icon{width:36px;height:36px;border:1px solid var(--line)}
+
+/* 首屏 */
+/* Hero */
+.hero{position:relative;padding:clamp(64px,8vw,100px) 0 0}
+.hero-grid{display:grid;grid-template-columns:1.04fr 1fr;gap:clamp(36px,5.5vw,68px);align-items:center}
+.hero-text{max-width:560px;display:flex;flex-direction:column;align-items:flex-start}
+.hero h1{
+  font-size:clamp(38px,5.2vw,58px);font-weight:300;line-height:1.14;letter-spacing:-.005em;
+  color:var(--text);
+  animation:rise .9s var(--ease) both;
+}
+.hero .sub{margin-top:22px;font-family:var(--font-system);font-size:clamp(15px,1.6vw,17px);font-weight:300;line-height:1.72;color:var(--text2);animation:rise .9s var(--ease) .07s both}
+.hero .sub b{color:var(--text);font-weight:500}
+.hero-actions{margin-top:clamp(26px,3.4vw,34px);display:flex;align-items:center;flex-wrap:wrap;gap:clamp(22px,3.2vw,40px);animation:rise .9s var(--ease) .14s both}
+
+/* 右侧方块视觉 */
+/* ================= 右侧 MC 元素方块集群 ================= */
+.hero-visual{position:relative;width:100%;max-width:520px;margin-inline:auto;overflow:visible;animation:rise 1.1s var(--ease) .2s both}
+.mc-showcase{
+  position:relative;width:100%;z-index:1;display:flex;flex-direction:column;align-items:center;
+}
+.pvp-art{
+  position:relative;z-index:1;
+  display:block;width:100%;max-width:100%;height:auto;
+  filter:drop-shadow(0 26px 30px rgba(0,0,0,.22));
+  animation:pvp-float 9s ease-in-out infinite alternate;
+}
+@keyframes pvp-float{
+  from{transform:translateY(0)}
+  to{transform:translateY(-12px)}
+}
+
+/* 内容分区 */
+/* Sections */
+.section{padding:clamp(72px,10vw,124px) 0 0}
+.sec-head{margin-bottom:clamp(30px,4.4vw,46px);text-align:center}
+.sec-head h2{font-size:clamp(26px,3.4vw,36px);font-weight:500;line-height:1.2;letter-spacing:-.01em}
+
+/* 页脚 */
+/* Footer */
+footer{margin-top:clamp(64px,9vw,110px);border-top:1px solid var(--line);padding:48px 0 32px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:clamp(28px,4vw,48px)}
+.foot-brand{flex:1 1 220px;min-width:0}
+.foot-brand .brand{margin-bottom:10px}
+.foot-brand p{font-size:12.5px;line-height:1.7;color:var(--text3);max-width:22em}
+.foot-cols{display:flex;gap:clamp(32px,5vw,72px);flex-wrap:wrap}
+.foot-col h4{font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:12px;letter-spacing:.04em}
+.foot-col ul{list-style:none;display:grid;gap:9px}
+.foot-col a,.foot-col button{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:400;color:var(--text2);transition:color .2s;text-align:left}
+.foot-icon{width:14px;height:14px;border-radius:3px;flex:none;object-fit:cover}
+.foot-col a:hover,.foot-col button:hover{color:var(--text)}
+.foot-bottom{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;font-weight:400;color:var(--text3)}
+
+/* ===== components.css ===== */
+/* ==========================================================================
+   WhiteShell · Components
+   可复用组件：按钮、图标按钮、下拉菜单、特性卡片、FAQ、结尾 CTA、弹窗与提示条。
+   ========================================================================== */
+/* 按钮 */
+.btn-pill{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 24px;border-radius:980px;font-size:15px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
+.btn-pill svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue2)}
+.btn-fill{background:var(--fill);color:var(--text)}
+.btn-fill:hover{background:var(--fill2)}
+.link-arrow{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:16.5px;font-weight:500;letter-spacing:-.01em}
+.link-arrow svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;color:var(--text2)}
+.icon:hover{color:var(--text);background:var(--fill)}
+.icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* 导航栏小按钮 */
+.nav-act .btn-pill{height:32px;padding:0 16px;font-size:13px}
+.nav-act .btn-pill svg{width:13px;height:13px}
+
+/* 下拉菜单 */
+/* Dropdown */
+.cwrap{position:relative;display:flex;align-items:center;height:52px}
+.cbtn{display:flex;align-items:center;gap:4px}
+.cbtn svg{width:10px;height:10px;flex:none;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.cwrap.open .cbtn{color:var(--text)}
+.cwrap.open .cbtn svg{transform:rotate(180deg)}
+.cmenu{position:absolute;top:calc(100% - 8px);left:50%;min-width:210px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--bg);box-shadow:0 20px 40px -10px rgba(0,0,0,.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);opacity:0;visibility:hidden;pointer-events:none;transform:translateX(-50%) translateY(-8px) scale(.96);transform-origin:top center;transition:all .2s var(--ease);z-index:10}
+.cmenu::before{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--bg);border-left:1px solid var(--line);border-top:1px solid var(--line);border-radius:2px 0 0 0}
+.cwrap.open .cmenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
+.citem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2)}
+.citem:hover{background:var(--bg2);color:var(--text)}
+.citem-icon{width:16px;height:16px;flex:none;display:block;object-fit:contain;border-radius:4px}
+
+/* 特性卡片 */
+/* ================= shadcn/ui: 经典极简卡片 ================= */
+.advantages{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.adv-card{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  transition:border-color .25s ease;
+  display:flex;flex-direction:column;
+}
+.adv-card:hover{border-color:var(--line2)}
+.adv-card-icon{display:block;width:44px;height:44px;object-fit:contain;margin-bottom:16px}
+
+.adv-card h3{font-size:15px;font-weight:600;letter-spacing:-.011em;margin-bottom:6px}
+.adv-card p{font-size:13.5px;font-weight:400;line-height:1.62;color:var(--text2)}
+
+/* FAQ */
+/* FAQ */
+.faq{max-width:840px;margin-inline:auto;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;position:relative;cursor:pointer;padding:22px 36px 22px 0;font-size:16px;font-weight:500;letter-spacing:-.01em;transition:color .2s}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--blue)}
+.faq summary::before{
+  content:"";position:absolute;right:10px;top:50%;width:14px;height:14px;margin-top:-7px;
+  background:
+    linear-gradient(currentColor,currentColor) center/14px 1.5px no-repeat,
+    linear-gradient(currentColor,currentColor) center/1.5px 14px no-repeat;
+  opacity:.42;
+}
+.faq details[open] summary::before{
+  background:linear-gradient(currentColor,currentColor) center/14px 1.5px no-repeat;
+  opacity:.75;
+}
+.faq .ans{padding:0 40px 24px 0;font-size:14.5px;font-weight:400;line-height:1.7;color:var(--text2)}
+.faq .ans a{color:var(--blue)}
+.faq .ans a:hover{text-decoration:underline}
+
+/* 弹窗 */
+/* Modals —— iOS 风格 */
+.modal{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;padding:20px}
+.modal[hidden]{display:none}
+.modal-mask{position:absolute;inset:0;background:rgba(0,0,0,.32);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.modal-box{
+  position:relative;width:min(412px,100%);max-height:92vh;
+  overflow:auto;overscroll-behavior:contain;
+  background:var(--elev);border-radius:22px;
+  box-shadow:0 44px 90px -34px rgba(0,0,0,.55),0 2px 10px -2px rgba(0,0,0,.08);
+  animation:pop .28s var(--ease);
+}
+.modal-head{
+  position:sticky;top:0;z-index:2;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:18px 18px 12px;background:var(--elev);
+}
+.modal-head h3{font-size:16.5px;font-weight:600;letter-spacing:-.02em;line-height:1.3}
+.modal-head .icon{width:30px;height:30px;border-radius:50%;background:var(--fill);color:var(--text3)}
+.modal-head .icon:hover{background:var(--fill2);color:var(--text)}
+.modal-head .icon svg{width:14px;height:14px}
+.modal-body{padding:4px 18px 20px;font-size:14px;font-weight:400;line-height:1.66;color:var(--text2)}
+
+/* 无标题弹窗（例如 KOOK widget）：内容直接铺满 */
+.modal.is-bare .modal-box{width:min(374px,100%);padding:0;overflow:auto}
+.modal.is-bare .modal-head{
+  position:absolute;top:0;left:0;right:0;z-index:3;height:0;padding:0;
+  justify-content:flex-end;background:none;pointer-events:none;
+}
+.modal.is-bare .modal-head h3{display:none}
+.modal.is-bare .modal-head .icon{
+  position:absolute;top:10px;right:10px;pointer-events:auto;
+  background:rgba(0,0,0,.42);color:#fff;
+}
+.modal.is-bare .modal-head .icon:hover{background:rgba(0,0,0,.6);color:#fff}
+.modal.is-bare .modal-body{padding:0}
+.modal-body h4{margin:16px 0 4px;font-size:14px;font-weight:600;color:var(--text)}
+.modal-body h4:first-child{margin-top:0}
+.modal-body p{margin:0 0 9px}
+.modal-body ul{margin:0 0 9px;padding-left:1.15em}
+.modal-body li{margin-bottom:4px}
+.modal-cta{margin-top:18px}
+.modal-body .modal-cta .btn-pill{display:flex;width:100%;height:44px;padding:0 18px;border-radius:12px;font-size:14.5px;font-weight:600}
+
+.log-modal{position:fixed;inset:0;z-index:2500;display:grid;place-items:center;padding:20px}
+.log-modal[hidden]{display:none}
+.log-mask{position:absolute;inset:0;background:rgba(0,0,0,.32);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.log-box{
+  position:relative;width:min(412px,100%);max-height:92vh;
+  display:flex;flex-direction:column;background:var(--elev);border-radius:22px;
+  box-shadow:0 44px 90px -34px rgba(0,0,0,.55),0 2px 10px -2px rgba(0,0,0,.08);
+  animation:pop .28s var(--ease);
+}
+.log-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 18px 12px}
+.log-head h3{font-size:16.5px;font-weight:600;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.log-head h3::before{content:"";width:9px;height:9px;border-radius:50%;background:#ff453a;flex:none}
+.log-head .icon{width:30px;height:30px;border-radius:50%;background:var(--fill);color:var(--text3)}
+.log-body{padding:0 18px 4px;overflow:auto;display:grid;gap:8px;font-size:13px;line-height:1.5}
+.log-item{display:grid;gap:2px;padding:10px 12px;border-radius:12px;background:var(--bg2)}
+.log-type{display:inline-block;width:fit-content;font-size:11px;font-weight:600;letter-spacing:.02em;padding:1px 7px;border-radius:6px;background:rgba(255,69,58,.12);color:#ff453a;margin-bottom:3px}
+.log-name{color:var(--text);font-weight:500;font-size:13px;word-break:break-all}
+.log-url{color:var(--text3);font-size:11.5px;word-break:break-all;font-family:var(--mono)}
+.log-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px 18px;font-size:12.5px;color:var(--text2)}
+.log-foot b{color:var(--text);font-weight:600}
+.log-foot .btn-pill{height:38px;padding:0 18px;border-radius:10px;font-size:13.5px;font-weight:600}
+
+/* 提示条 */
+/* KOOK 引流浮层 */
+.kook-card{
+  position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:2800;
+  width:min(344px,calc(100vw - 32px));padding:14px;
+  border-radius:14px;background:var(--bg);border:1px solid var(--line);
+  box-shadow:0 18px 44px -26px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(26px) scale(.94);pointer-events:none;
+  transition:opacity .26s ease,transform .52s cubic-bezier(.34,1.45,.5,1);
+}
+.kook-card.show{opacity:1;transform:none;pointer-events:auto}
+.kook-head{display:flex;align-items:flex-start;gap:10px}
+.kook-icon{width:40px;height:40px;border-radius:10px;object-fit:cover;flex:none;background:var(--fill)}
+.kook-text{flex:1;min-width:0}
+.kook-title{font-size:13.5px;font-weight:600;line-height:1.4;color:var(--text)}
+.kook-meta{margin-top:2px;font-size:12px;line-height:1.4;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kook-close{
+  flex:none;width:24px;height:24px;border-radius:6px;
+  display:grid;place-items:center;color:var(--text3);
+}
+.kook-close:hover{color:var(--text);background:var(--fill)}
+.kook-close svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.kook-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.kook-view{
+  padding:0;border:0;background:none;cursor:pointer;
+  font-size:12.5px;font-weight:500;color:var(--text2);
+}
+.kook-view:hover{color:var(--text)}
+.kook-join{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;
+  height:32px;padding:0 14px;border-radius:8px;
+  background:var(--kook-green);color:#0d1400;font-size:13px;font-weight:600;
+}
+.kook-join:hover{background:var(--kook-green-2)}
+/* 卡片出现时把提示条抬高，避免重叠 */
+body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
+
+/* Toast：扁平提示（无阴影、无模糊、无描边） */
+#toast{
+  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:3000;
+  width:max-content;max-width:min(360px,calc(100vw - 32px));
+  padding:10px 13px;border-radius:8px;
+  background:var(--toast-bg);color:var(--toast-fg);
+  font-size:13px;font-weight:400;line-height:1.5;text-align:left;
+  opacity:0;transform:translate(-50%,8px);pointer-events:none;
+  transition:opacity .18s ease,transform .18s var(--ease);
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* KOOK 弹窗按钮（品牌绿） */
+.kook-join-btn,
+.modal-body .modal-cta .kook-join-btn{
+  background:var(--kook-green);color:#0d1400;
+}
+.kook-join-btn:hover,
+.modal-body .modal-cta .kook-join-btn:hover{background:var(--kook-green-2)}
+
+/* 在线玩家弹窗 */
+.kook-dialog-lead{margin:0 0 10px;font-size:12.5px;color:var(--text3)}
+.kook-embed{display:block;background:var(--bg)}
+.kook-embed iframe{display:block;width:100%;height:500px;max-width:100%;border:0;border-radius:0}
+.kook-dialog-foot{padding:12px 14px 14px;background:var(--elev)}
+.kook-dialog-foot .btn-pill{display:flex;width:100%;height:46px;border-radius:12px;font-size:15px;font-weight:600}
+
+/* 购买弹窗：支付二维码 */
+.pay-qr{display:flex;gap:12px;margin:12px 0 10px}
+.pay-qr-item{flex:1;min-width:0;text-align:center;margin:0}
+.pay-qr-box{
+  display:grid;place-items:center;height:118px;
+  border:1px dashed var(--line2);border-radius:12px;
+  font-size:12px;color:var(--text3);
+}
+.pay-qr-item figcaption{margin-top:7px;font-size:12px;color:var(--text2)}
+.pay-note{font-size:12px;line-height:1.6;color:var(--text3)}
+
+/* ===== motion.css ===== */
+/* ==========================================================================
+   WhiteShell · Motion
+   关键帧动画与滚动入场效果；遵循 prefers-reduced-motion。
+   ========================================================================== */
+@keyframes orb-a{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(4vw,5vh,0) scale(1.1)}}
+@keyframes orb-b{from{transform:translate3d(0,0,0) scale(1.05)}to{transform:translate3d(-4vw,6vh,0) scale(.92)}}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-20px) rotate(6deg); }
+}
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes sheet-up{from{transform:translateY(28px);opacity:.7}to{transform:none;opacity:1}}
+
+/* ===== responsive.css ===== */
+/* ==========================================================================
+   WhiteShell · Responsive
+   断点适配（1000 / 900 / 860 / 700 / 560）与无障碍降级。
+   ========================================================================== */
+@media (max-width:1000px){.advantages{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero{text-align:center;padding-top:60px}
+  .hero-text{max-width:100%;margin-inline:auto;align-items:center}
+  .hero h1{font-size:clamp(32px,8.4vw,44px)}
+  .hero-actions{justify-content:center}
+  .hero-visual{max-width:460px;margin-inline:auto}
+}
+@media (max-width:860px){.nav-links{display:none}.nav-act{display:none}.menu-btn{display:grid}}
+@media (max-width:700px){
+  .wrap{width:calc(100% - 40px)}
+  .hero-actions{gap:16px}
+  .nav-inner{width:calc(100% - 32px)}
+  footer{margin-top:56px;padding:30px 0 24px}
+  .foot{flex-direction:column;gap:22px}
+  .foot-brand{flex:0 0 auto}
+  .foot-brand .brand{margin-bottom:8px}
+  .foot-brand p{max-width:none}
+  .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .foot-bottom{margin-top:20px;padding-top:14px}
+}
+@media (max-width:560px){
+  .kook-card{left:16px;right:16px;width:auto;bottom:calc(16px + env(safe-area-inset-bottom));padding:11px 12px;gap:10px}
+  .kook-title{font-size:13px}
+  .kook-join{height:30px;padding:0 12px;font-size:12.5px}
+  .faq summary{font-size:15.5px}
+  .faq .ans{padding-right:14px;font-size:14px}
+  .modal,.log-modal{place-items:end center;padding:0}
+  .modal-box,.log-box{width:100%;max-height:92vh;border-radius:22px 22px 0 0;animation:sheet-up .32s var(--ease)}
+  .modal.is-bare .modal-box{width:100%;border-radius:22px 22px 0 0}
+  .kook-embed iframe{height:auto;aspect-ratio:35/50;max-height:62vh}
+  .modal-box{padding-bottom:env(safe-area-inset-bottom)}
+  .modal-box::before{content:"";display:block;width:36px;height:4px;margin:8px auto 0;border-radius:99px;background:var(--line2)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .orb,.hero h1,.hero .sub,.hero-actions,.hero-visual,.pvp-art{animation:none}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .modal-box,.log-box{animation:none}
+}
+
+/* ===== pages.css ===== */
+/* ==========================================================================
+   WhiteShell · Pages
+   独立页面（当前只有 404）的专用样式。
+   ========================================================================== */
+
+.error-page{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:80px 24px;
+}
+.error-page .code{
+  font-family:var(--font-en);
+  font-size:clamp(64px,14vw,120px);
+  font-weight:700;
+  letter-spacing:-.04em;
+  line-height:1;
+}
+.error-page p{margin-top:16px;font-size:15px;color:var(--text2)}
+.error-page .btn-pill{margin-top:28px}
+
+/* ==========================================================================
+   购买页
+   ========================================================================== */
+.page-nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--nav);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--line);
+}
+.page-nav-inner{display:flex;align-items:center;height:56px}
+
+.buy{padding:clamp(36px,6vw,64px) 0 0;max-width:760px}
+.buy-head{text-align:center;margin-bottom:clamp(24px,4vw,36px)}
+.buy-head h1{font-family:var(--font-en);font-size:clamp(30px,4.4vw,42px);font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.buy-head p{margin-top:10px;font-size:14px;line-height:1.6;color:var(--text2)}
+
+.buy-panel{
+  border:1px solid var(--line);border-radius:14px;background:var(--elev);
+  padding:18px 20px;margin-bottom:14px;
+}
+.buy-panel-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.buy-panel h2{font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.buy-panel-desc{font-size:13.5px;line-height:1.66;color:var(--text2);margin-bottom:12px}
+.buy-badge{font-size:11px;font-weight:600;padding:2px 7px;border-radius:6px;background:var(--fill);color:var(--text2)}
+.buy-badge-green{background:rgba(135,235,0,.16);color:#3d7a00}
+
+.pay-qr{display:flex;gap:12px;margin-top:12px}
+.pay-qr-item{flex:1;min-width:0;text-align:center;margin:0}
+.pay-qr-box{
+  display:grid;place-items:center;height:140px;
+  border:1px dashed var(--line2);border-radius:12px;
+  font-size:12.5px;line-height:1.7;color:var(--text3);
+}
+.pay-qr-box span{display:block;font-size:11px;opacity:.7}
+.pay-qr-item figcaption{margin-top:8px;font-size:12.5px;color:var(--text2)}
+
+.buy-links{list-style:none;margin:2px -8px 0;padding:0;display:grid;gap:2px}
+.buy-link{display:flex;align-items:center;gap:12px;padding:9px 8px;border-radius:10px}
+.buy-link:hover{background:var(--fill)}
+.buy-link-icon{width:34px;height:34px;border-radius:8px;flex:none;object-fit:contain}
+.buy-link-body{flex:1;min-width:0}
+.buy-link-name{margin:0;display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:500;color:var(--text)}
+.buy-link-url{display:block;margin-top:2px;font-size:12px;color:var(--text3);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.buy-link-url:hover{color:var(--blue)}
+
+.buy-notes{margin:0;padding-left:1.2em;display:grid;gap:7px;font-size:13px;line-height:1.7;color:var(--text2)}
+.buy-notes b{color:var(--text);font-weight:600}
+
+.page-foot{margin-top:clamp(40px,7vw,64px);border-top:1px solid var(--line);padding:22px 0 34px;font-size:12.5px;color:var(--text3)}
+.page-foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.page-foot a{color:var(--text2)}
+.page-foot a:hover{color:var(--text)}
+
+@media (max-width:700px){
+  .buy{padding-top:32px}
+  .buy-panel{padding:16px}
+  .page-foot .wrap{justify-content:center;text-align:center}
+}
