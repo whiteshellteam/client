@@ -30,17 +30,11 @@
     setThemeColor(theme === 'dark' ? DARK_COLOR : LIGHT_COLOR);
   }
 
-  /** 改写 theme-color；部分浏览器需要节点重新插入才会刷新状态栏 */
+  /** 改写 theme-color：只更新属性，不做强制重排 */
   function setThemeColor(color) {
     var node = document.getElementById('themeColor');
     if (!node) return;
-    if (node.getAttribute('content') === color) return;
     node.setAttribute('content', color);
-    var parent = node.parentNode;
-    if (parent) {
-      parent.removeChild(node);
-      parent.appendChild(node);
-    }
   }
 
   function current() {
@@ -53,17 +47,6 @@
     WS.storage.set('ws-t', next);
   }
 
-  /* 用户没有手动选过主题时，跟随系统深浅色变化 */
-  function watchSystem() {
-    if (!window.matchMedia) return;
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    var handler = function (e) {
-      if (WS.storage.get('ws-t')) return;
-      apply(e.matches ? 'dark' : 'light');
-    };
-    if (mq.addEventListener) mq.addEventListener('change', handler);
-    else if (mq.addListener) mq.addListener(handler);
-  }
 
   WS.theme = {
     apply: apply,
@@ -71,7 +54,6 @@
     init: function () {
       buttons = WS.$$('[data-theme-toggle]');
       apply(root.getAttribute('data-theme') || 'dark');
-      watchSystem();
       buttons.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
           e.preventDefault();
