@@ -7,23 +7,21 @@ window.WS = window.WS || {};
 
 window.WS.docs = {
   store: {
-    title: '选购商品',
+    title: '购买',
     body: ''
-      + '<p>WhiteShell 提供模块授权与配套服务，具体商品、价格与活动以官方频道公告为准。</p>'
-      + '<h4>一、购买方式</h4>'
-      + '<p>请通过官方 KOOK 频道联系管理员下单。官方不会通过私聊或第三方店铺收款，请提高警惕、谨防诈骗。</p>'
-      + '<h4>二、商品包含</h4>'
-      + '<ul><li>WhiteShell 模块使用授权，含后续版本更新；</li><li>官方频道内的安装指导与问题排查；</li><li>可选的进阶配置与定制服务。</li></ul>'
-      + '<h4>三、售后说明</h4>'
-      + '<p>购买后如遇使用问题，可在官方频道提交工单，管理员会尽快协助处理。</p>'
-      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="https://kook.vip/vp71ue" data-kook target="_blank" rel="noopener">前往 KOOK 频道选购</a></div>'
-  },
-
-  other: {
-    title: '其他问题',
-    body: ''
-      + '<p>如果上面的内容没有解决你的问题，可以加入官方频道提交工单，管理员会尽快处理。</p>'
-      + '<p>提交时附上设备型号、系统版本和问题截图，能更快定位。</p>'
-      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="https://kook.vip/vp71ue" data-kook target="_blank" rel="noopener">前往 KOOK 频道</a></div>'
+      + '<p>支持官方店铺与扫码支付两种方式，扫码支付 0 手续费，推荐优先使用。</p>'
+      + '<h4>官方店铺 ①</h4>'
+      + '<p>通过电商平台下单，价格已含平台佣金。</p>'
+      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="#" data-shop1 target="_blank" rel="noopener">前往店铺 ①</a></div>'
+      + '<h4>官方店铺 ②</h4>'
+      + '<p>备用店铺，平台手续费较高，实际到手价会略贵一些，建议优先选择店铺 ① 或扫码支付。</p>'
+      + '<div class="modal-cta"><a class="btn-pill btn-fill" href="#" data-shop2 target="_blank" rel="noopener">前往店铺 ②</a></div>'
+      + '<h4>扫码支付（0 手续费）</h4>'
+      + '<p>微信或支付宝扫码付款，付款时请务必在备注里填写你的联系方式（QQ / 微信 / 邮箱），方便对账与开通。</p>'
+      + '<div class="pay-qr">'
+      +   '<figure class="pay-qr-item"><div class="pay-qr-box">二维码待上传</div><figcaption>微信支付</figcaption></figure>'
+      +   '<figure class="pay-qr-item"><div class="pay-qr-box">二维码待上传</div><figcaption>支付宝</figcaption></figure>'
+      + '</div>'
+      + '<p class="pay-note">付款完成后把支付截图和备注信息发到官方频道，管理员看到后会尽快为你开通。</p>'
   }
 };

@@ -13,7 +13,9 @@
   var PLACEHOLDERS = [
     ['data-dl', '下载链接尚未配置'],
     ['data-kook', 'KOOK 频道链接尚未配置'],
-    ['data-tg', 'Telegram 频道链接尚未配置']
+    ['data-tg', 'Telegram 频道链接尚未配置'],
+    ['data-shop1', '店铺 ① 链接尚未配置'],
+    ['data-shop2', '店铺 ② 链接尚未配置']
   ];
 
   /** 给带 data-bust 的下载链接加 ?v=时间戳，防止旧缓存 */

@@ -9,15 +9,7 @@
   .hero-text{max-width:100%;margin-inline:auto;align-items:center}
   .hero h1{font-size:clamp(32px,8.4vw,44px)}
   .hero-actions{justify-content:center}
-  .hero-visual{max-width:420px;margin-inline:auto;height:350px}
-  .mc-block.b1 { width: 100px; left: 0; top: 5%; }
-  .mc-block.b2 { width: 80px; right: 5%; top: 0; }
-  .mc-block.b3 { width: 110px; left: 15%; bottom: 15%; }
-  .mc-block.b4 { width: 70px; right: 15%; bottom: 25%; }
-  .mc-block.b5 { width: 50px; left: 5%; top: 45%; }
-  .mc-block.b6 { width: 80px; right: 0; bottom: 0; }
-  .mc-block.b7 { width: 60px; left: 55%; top: 0; }
-  .mc-block.b8 { width: 70px; right: 35%; top: 35%; }
+  .hero-visual{max-width:420px;margin-inline:auto}
 }
 @media (max-width:860px){.nav-links{display:none}.nav-act{display:none}.menu-btn{display:grid}}
 @media (max-width:700px){
@@ -48,7 +40,7 @@
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .orb,.hero h1,.hero .sub,.hero-actions,.hero-visual,.mc-block{animation:none}
+  .orb,.hero h1,.hero .sub,.hero-actions,.hero-visual,.pvp-art{animation:none}
   .js .rv{opacity:1;transform:none;transition:none}
   .modal-box,.log-box{animation:none}
 }
