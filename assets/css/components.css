@@ -45,15 +45,8 @@
   display:flex;flex-direction:column;
 }
 .adv-card:hover{border-color:var(--line2)}
-.adv-icon{
-  width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
-  background:var(--accent-soft);color:var(--accent);margin-bottom:16px;
-}
-.adv-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.adv-card:nth-child(1){--accent:#4f7cff;--accent-soft:rgba(79,124,255,.12)}
-.adv-card:nth-child(2){--accent:#0d9db8;--accent-soft:rgba(13,157,184,.12)}
-.adv-card:nth-child(3){--accent:#1a9e6a;--accent-soft:rgba(26,158,106,.12)}
-.adv-card:nth-child(4){--accent:#d78324;--accent-soft:rgba(215,131,36,.13)}
+.adv-card-icon{display:block;width:44px;height:44px;object-fit:contain;margin-bottom:16px}
+
 .adv-card h3{font-size:15px;font-weight:600;letter-spacing:-.011em;margin-bottom:6px}
 .adv-card p{font-size:13.5px;font-weight:400;line-height:1.62;color:var(--text2)}
 
@@ -64,10 +57,17 @@
 .faq summary{list-style:none;position:relative;cursor:pointer;padding:22px 36px 22px 0;font-size:16px;font-weight:500;letter-spacing:-.01em;transition:color .2s}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary:hover{color:var(--blue)}
-.faq summary::before,.faq summary::after{content:"";position:absolute;right:9px;top:50%;background:currentColor;opacity:.4;transition:transform .3s var(--ease),opacity .3s ease}
-.faq summary::before{width:13px;height:1.5px;margin-top:-.75px}
-.faq summary::after{width:1.5px;height:13px;margin-top:-6.5px;right:14.25px}
-.faq details[open] summary::after{transform:scaleY(0);opacity:0}
+.faq summary::before{
+  content:"";position:absolute;right:10px;top:50%;width:14px;height:14px;margin-top:-7px;
+  background:
+    linear-gradient(currentColor,currentColor) center/14px 1.5px no-repeat,
+    linear-gradient(currentColor,currentColor) center/1.5px 14px no-repeat;
+  opacity:.42;
+}
+.faq details[open] summary::before{
+  background:linear-gradient(currentColor,currentColor) center/14px 1.5px no-repeat;
+  opacity:.75;
+}
 .faq .ans{padding:0 40px 24px 0;font-size:14.5px;font-weight:400;line-height:1.7;color:var(--text2)}
 .faq .ans a{color:var(--blue)}
 .faq .ans a:hover{text-decoration:underline}
@@ -197,7 +197,7 @@ body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
 
 /* 在线玩家弹窗 */
 .kook-dialog-lead{margin:0 0 10px;font-size:12.5px;color:var(--text3)}
-.kook-embed{display:block}
-.kook-embed iframe{display:block;width:100%;height:500px;max-width:100%;border:0}
+.kook-embed{display:block;background:var(--bg)}
+.kook-embed iframe{display:block;width:100%;height:500px;max-width:100%;border:0;border-radius:0}
 .kook-dialog-foot{padding:12px 14px 14px;background:var(--bg)}
 .kook-dialog-foot .btn-pill{display:flex;width:100%;height:46px;border-radius:12px;font-size:15px;font-weight:600}
