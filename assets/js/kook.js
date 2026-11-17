@@ -100,7 +100,7 @@
 
     var title = document.createElement('p');
     title.className = 'kook-title';
-    title.textContent = '加入我们的 KOOK 频道';
+    title.textContent = '加入我们的 KOOK 社区';
 
     var meta = document.createElement('p');
     meta.className = 'kook-meta';
