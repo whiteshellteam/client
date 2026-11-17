@@ -54,19 +54,16 @@
     if (!WS.dialog || !WS.dialog.openContent) return;
 
     var source = data || FALLBACK;
-    var online = parseInt(source.online_count, 10);
-    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    var src = 'https://www.kookapp.cn/widget?id=7690149438214340&theme=' + (dark ? 'dark' : 'light');
+    var dark = document.documentElement.getAttribute("data-theme") === "dark";
+    var src = "https://www.kookapp.cn/widget?id=7690149438214340&theme=" + (dark ? "dark" : "light");
 
-    var lead = escapeHtml(source.name || FALLBACK.name) + (online > 0 ? ' · 在线 ' + online + ' 人' : '');
-    var html = '<p class="kook-dialog-lead">' + lead + '</p>'
-      + '<div class="kook-embed"><iframe src="' + src + '" width="350" height="500" '
-      + 'allowtransparency="true" frameborder="0" scrolling="no" title="KOOK 频道"></iframe></div>'
-      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="'
+    var html = "<div class=\"kook-embed\"><iframe src=\"" + src + "\" width=\"350\" height=\"500\" "
+      + "allowtransparency=\"true\" frameborder=\"0\" scrolling=\"no\" title=\"KOOK 频道\"></iframe></div>"
+      + "<div class=\"modal-cta\"><a class=\"btn-pill kook-join-btn\" href=\""
       + escapeHtml(source.invite_link || FALLBACK.invite_link)
-      + '" target="_blank" rel="noopener">加入 KOOK 频道</a></div>';
+      + "\" target=\"_blank\" rel=\"noopener\">加入 KOOK 频道</a></div>";
 
-    WS.dialog.openContent('在线玩家', html);
+    WS.dialog.openContent("加入 KOOK 频道", html);
   }
 
   function build(data) {
