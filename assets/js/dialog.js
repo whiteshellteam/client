@@ -11,9 +11,10 @@
   var bodyEl = null;
   var boxEl = null;
 
-  function fill(title, html) {
+  function fill(title, html, bare) {
     if (!modal) return;
-    titleEl.textContent = title;
+    modal.classList.toggle('is-bare', !!bare);
+    if (title) titleEl.textContent = title;
     bodyEl.innerHTML = html;
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -28,13 +29,14 @@
   }
 
   /** 用自定义 HTML 打开同一个弹窗（在线玩家列表等动态内容） */
-  function openContent(title, html) {
-    fill(title, html);
+  function openContent(title, html, bare) {
+    fill(title, html, bare);
   }
 
   function close() {
     if (!modal || modal.hidden) return;
     modal.hidden = true;
+    modal.classList.remove('is-bare');
     document.body.style.overflow = '';
   }
 

@@ -78,7 +78,7 @@
 .modal[hidden]{display:none}
 .modal-mask{position:absolute;inset:0;background:rgba(0,0,0,.32);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .modal-box{
-  position:relative;width:min(412px,100%);max-height:min(80vh,680px);
+  position:relative;width:min(412px,100%);max-height:92vh;
   overflow:auto;overscroll-behavior:contain;
   background:var(--bg);border-radius:22px;
   box-shadow:0 44px 90px -34px rgba(0,0,0,.55),0 2px 10px -2px rgba(0,0,0,.08);
@@ -94,6 +94,20 @@
 .modal-head .icon:hover{background:var(--fill2);color:var(--text)}
 .modal-head .icon svg{width:14px;height:14px}
 .modal-body{padding:4px 18px 20px;font-size:14px;font-weight:400;line-height:1.66;color:var(--text2)}
+
+/* 无标题弹窗（例如 KOOK widget）：内容直接铺满 */
+.modal.is-bare .modal-box{width:min(374px,100%);padding:0;overflow:auto}
+.modal.is-bare .modal-head{
+  position:absolute;top:0;left:0;right:0;z-index:3;height:0;padding:0;
+  justify-content:flex-end;background:none;pointer-events:none;
+}
+.modal.is-bare .modal-head h3{display:none}
+.modal.is-bare .modal-head .icon{
+  position:absolute;top:10px;right:10px;pointer-events:auto;
+  background:rgba(0,0,0,.42);color:#fff;
+}
+.modal.is-bare .modal-head .icon:hover{background:rgba(0,0,0,.6);color:#fff}
+.modal.is-bare .modal-body{padding:0}
 .modal-body h4{margin:16px 0 4px;font-size:14px;font-weight:600;color:var(--text)}
 .modal-body h4:first-child{margin-top:0}
 .modal-body p{margin:0 0 9px}
@@ -106,7 +120,7 @@
 .log-modal[hidden]{display:none}
 .log-mask{position:absolute;inset:0;background:rgba(0,0,0,.32);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .log-box{
-  position:relative;width:min(412px,100%);max-height:min(80vh,680px);
+  position:relative;width:min(412px,100%);max-height:92vh;
   display:flex;flex-direction:column;background:var(--bg);border-radius:22px;
   box-shadow:0 44px 90px -34px rgba(0,0,0,.55),0 2px 10px -2px rgba(0,0,0,.08);
   animation:pop .28s var(--ease);
@@ -155,9 +169,9 @@
 .kook-join{
   flex:none;display:inline-flex;align-items:center;justify-content:center;
   height:32px;padding:0 14px;border-radius:8px;
-  background:var(--blue);color:#fff;font-size:13px;font-weight:500;
+  background:var(--kook-green);color:#0d1400;font-size:13px;font-weight:600;
 }
-.kook-join:hover{background:var(--blue2)}
+.kook-join:hover{background:var(--kook-green-2)}
 /* 卡片出现时把提示条抬高，避免重叠 */
 body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
 
@@ -183,5 +197,7 @@ body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
 
 /* 在线玩家弹窗 */
 .kook-dialog-lead{margin:0 0 10px;font-size:12.5px;color:var(--text3)}
-.kook-embed{display:flex;justify-content:center}
-.kook-embed iframe{max-width:100%;border:0;border-radius:10px;display:block}
+.kook-embed{display:block}
+.kook-embed iframe{display:block;width:100%;height:500px;max-width:100%;border:0}
+.kook-dialog-foot{padding:12px 14px 14px;background:var(--bg)}
+.kook-dialog-foot .btn-pill{display:flex;width:100%;height:46px;border-radius:12px;font-size:15px;font-weight:600}

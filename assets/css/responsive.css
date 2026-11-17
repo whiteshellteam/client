@@ -39,7 +39,9 @@
   .faq summary{font-size:15.5px}
   .faq .ans{padding-right:14px;font-size:14px}
   .modal,.log-modal{place-items:end center;padding:0}
-  .modal-box,.log-box{width:100%;max-height:86vh;border-radius:22px 22px 0 0;animation:sheet-up .32s var(--ease)}
+  .modal-box,.log-box{width:100%;max-height:92vh;border-radius:22px 22px 0 0;animation:sheet-up .32s var(--ease)}
+  .modal.is-bare .modal-box{width:100%;border-radius:22px 22px 0 0}
+  .kook-embed iframe{height:auto;aspect-ratio:35/50;max-height:62vh}
   .modal-box{padding-bottom:env(safe-area-inset-bottom)}
   .modal-box::before{content:"";display:block;width:36px;height:4px;margin:8px auto 0;border-radius:99px;background:var(--line2)}
 }

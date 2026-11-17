@@ -49,21 +49,27 @@
     remove();
   }
 
-  /** 在线玩家弹窗：直接用 KOOK 官方 widget（跟随站点亮/暗主题） */
+  /** 只收起浮层，不记录冷却（例如点开在线玩家时） */
+  function hideNow() {
+    window.clearTimeout(timer);
+    remove();
+  }
+
+  /** 在线玩家弹窗：直接铺官方 widget，不额外加标题 */
   function openMembers(data) {
     if (!WS.dialog || !WS.dialog.openContent) return;
 
     var source = data || FALLBACK;
-    var dark = document.documentElement.getAttribute("data-theme") === "dark";
-    var src = "https://www.kookapp.cn/widget?id=7690149438214340&theme=" + (dark ? "dark" : "light");
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var src = 'https://www.kookapp.cn/widget?id=7690149438214340&theme=' + (dark ? 'dark' : 'light');
 
-    var html = "<div class=\"kook-embed\"><iframe src=\"" + src + "\" width=\"350\" height=\"500\" "
-      + "allowtransparency=\"true\" frameborder=\"0\" scrolling=\"no\" title=\"KOOK 频道\"></iframe></div>"
-      + "<div class=\"modal-cta\"><a class=\"btn-pill kook-join-btn\" href=\""
+    var html = '<div class="kook-embed"><iframe src="' + src + '" width="350" height="500" '
+      + 'allowtransparency="true" frameborder="0" scrolling="no" title="KOOK 频道"></iframe></div>'
+      + '<div class="kook-dialog-foot"><a class="btn-pill kook-join-btn" href="'
       + escapeHtml(source.invite_link || FALLBACK.invite_link)
-      + "\" target=\"_blank\" rel=\"noopener\">加入 KOOK 频道</a></div>";
+      + '" target="_blank" rel="noopener">加入 KOOK 频道</a></div>';
 
-    WS.dialog.openContent("加入 KOOK 频道", html);
+    WS.dialog.openContent('', html, true);
   }
 
   function build(data) {
@@ -122,7 +128,10 @@
     view.className = 'kook-view';
     view.type = 'button';
     view.textContent = '查看在线玩家';
-    view.addEventListener('click', function () { openMembers(data); });
+    view.addEventListener('click', function () {
+      hideNow();
+      openMembers(data);
+    });
 
     var join = document.createElement('a');
     join.className = 'kook-join';
@@ -171,6 +180,7 @@
 
   WS.kook = {
     dismiss: dismiss,
+    hide: hideNow,
     members: openMembers,
     init: function () {
       fetchWidget().then(function (data) {
