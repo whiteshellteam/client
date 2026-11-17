@@ -1,8 +1,7 @@
 /* ==========================================================================
    WhiteShell · kook
-   KOOK 频道引流卡片：首次进站 5 秒后从右下角弹出，展示服务器名称与在线人数。
-   数据来自 KOOK 官方 widget 接口；接口不可用时回退到本地静态信息。
-   关闭后 7 天不再打扰，点击加入后 30 天内不再打扰。
+   左下角引流浮层 + 「在线玩家」弹窗，数据都来自 KOOK 官方 widget 接口。
+   浮层：首次进站 5 秒后出现，关闭后 7 天不再打扰，点加入后 30 天内不再打扰。
    ========================================================================== */
 (function (WS) {
   'use strict';
@@ -16,15 +15,21 @@
     name: 'Minecraft中国版社区',
     icon: 'assets/img/icons/kook.png',
     online_count: '',
-    invite_link: 'https://kook.vip/vp71ue'
+    invite_link: 'https://kook.vip/vp71ue',
+    members: []
   };
 
   var card = null;
   var timer = 0;
 
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
   function snoozed() {
-    var until = parseInt(WS.storage.get(STORAGE_KEY) || '0', 10);
-    return until > Date.now();
+    return parseInt(WS.storage.get(STORAGE_KEY) || '0', 10) > Date.now();
   }
 
   function remove() {
@@ -44,11 +49,46 @@
     remove();
   }
 
+  /** 在线玩家弹窗：Discord / KOOK 那种一行一个的成员列表 */
+  function openMembers(data) {
+    if (!WS.dialog || !WS.dialog.openContent) return;
+
+    var source = data || FALLBACK;
+    var online = parseInt(source.online_count, 10);
+    var members = (source.members || []).slice(0, 60);
+
+    var rows = members.map(function (member) {
+      return '<li class="kook-member">'
+        + '<span class="kook-avatar">'
+        +   '<img src="' + escapeHtml(member.avatar) + '" alt="" width="32" height="32" data-optional>'
+        +   '<i class="kook-status"></i>'
+        + '</span>'
+        + '<span class="kook-name">' + escapeHtml(member.nickname || '玩家') + '</span>'
+        + '</li>';
+    }).join('');
+
+    var lead = escapeHtml(source.name || FALLBACK.name) + (online > 0 ? ' · 在线 ' + online + ' 人' : '');
+    var html = '<p class="kook-dialog-lead">' + lead + '</p>'
+      + (rows ? '<ul class="kook-members">' + rows + '</ul>' : '')
+      + '<p class="kook-dialog-note">和大家一起联机、交流配置，还能第一时间拿到新版本更新。</p>'
+      + '<div class="modal-cta"><a class="btn-pill btn-blue" href="'
+      + escapeHtml(source.invite_link || FALLBACK.invite_link)
+      + '" target="_blank" rel="noopener">加入 KOOK 频道</a></div>';
+
+    WS.dialog.openContent('在线玩家', html);
+  }
+
   function build(data) {
+    var online = parseInt(data.online_count, 10);
+
     var el = document.createElement('aside');
     el.className = 'kook-card';
     el.setAttribute('role', 'complementary');
     el.setAttribute('aria-label', '加入 KOOK 频道');
+
+    /* 头部：图标 + 文案 + 关闭 */
+    var head = document.createElement('div');
+    head.className = 'kook-head';
 
     var icon = document.createElement('img');
     icon.className = 'kook-icon';
@@ -70,11 +110,31 @@
 
     var meta = document.createElement('p');
     meta.className = 'kook-meta';
-    var online = parseInt(data.online_count, 10);
     meta.textContent = (data.name || FALLBACK.name) + (online > 0 ? ' · ' + online + ' 人在线' : '');
 
     text.appendChild(title);
     text.appendChild(meta);
+
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'kook-close';
+    closeBtn.type = 'button';
+    closeBtn.setAttribute('aria-label', '关闭');
+    closeBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+    closeBtn.addEventListener('click', function () { dismiss(7); });
+
+    head.appendChild(icon);
+    head.appendChild(text);
+    head.appendChild(closeBtn);
+
+    /* 操作区：查看在线玩家 + 加入 */
+    var actions = document.createElement('div');
+    actions.className = 'kook-actions';
+
+    var view = document.createElement('button');
+    view.className = 'kook-view';
+    view.type = 'button';
+    view.textContent = '查看在线玩家';
+    view.addEventListener('click', function () { openMembers(data); });
 
     var join = document.createElement('a');
     join.className = 'kook-join';
@@ -84,17 +144,11 @@
     join.textContent = '加入';
     join.addEventListener('click', function () { dismiss(30); });
 
-    var closeBtn = document.createElement('button');
-    closeBtn.className = 'kook-close';
-    closeBtn.type = 'button';
-    closeBtn.setAttribute('aria-label', '关闭');
-    closeBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>';
-    closeBtn.addEventListener('click', function () { dismiss(7); });
+    actions.appendChild(view);
+    actions.appendChild(join);
 
-    el.appendChild(icon);
-    el.appendChild(text);
-    el.appendChild(join);
-    el.appendChild(closeBtn);
+    el.appendChild(head);
+    el.appendChild(actions);
     return el;
   }
 
@@ -120,9 +174,7 @@
         if (!res.ok) throw new Error('bad status');
         return res.json();
       })
-      .then(function (data) {
-        return data && data.name ? data : FALLBACK;
-      })
+      .then(function (data) { return data && data.name ? data : FALLBACK; })
       .catch(function () {
         window.clearTimeout(abortTimer);
         return FALLBACK;
@@ -131,8 +183,8 @@
 
   WS.kook = {
     dismiss: dismiss,
+    members: openMembers,
     init: function () {
-      if (snoozed()) return;
       fetchWidget().then(function (data) {
         if (snoozed()) return;
         timer = window.setTimeout(function () { show(data); }, DELAY);

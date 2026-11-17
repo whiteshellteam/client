@@ -3,17 +3,15 @@
    可复用组件：按钮、图标按钮、下拉菜单、特性卡片、FAQ、结尾 CTA、弹窗与提示条。
    ========================================================================== */
 /* 按钮 */
-.btn-pill{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 24px;border-radius:980px;font-size:15px;font-weight:500;letter-spacing:-.01em;white-space:nowrap;transition:all .25s var(--ease)}
+.btn-pill{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;padding:0 24px;border-radius:980px;font-size:15px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
 .btn-pill svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.btn-blue{background:var(--btn-grad);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
-.btn-blue:hover{background:var(--btn-grad-hover)}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue2)}
 .btn-fill{background:var(--fill);color:var(--text)}
 .btn-fill:hover{background:var(--fill2)}
-.btn-pill:active{transform:scale(.985)}
-.link-arrow{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:16.5px;font-weight:500;letter-spacing:-.01em;transition:opacity .2s}
-.link-arrow:hover{opacity:.75}
+.link-arrow{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:16.5px;font-weight:500;letter-spacing:-.01em}
 .link-arrow svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;color:var(--text2);transition:background-color .2s ease,color .2s ease}
+.icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none;color:var(--text2)}
 .icon:hover{color:var(--text);background:var(--fill)}
 .icon svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
@@ -31,7 +29,7 @@
 .cmenu{position:absolute;top:calc(100% - 8px);left:50%;min-width:210px;padding:6px;border:1px solid var(--line);border-radius:14px;background:var(--bg);box-shadow:0 20px 40px -10px rgba(0,0,0,.15);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);opacity:0;visibility:hidden;pointer-events:none;transform:translateX(-50%) translateY(-8px) scale(.96);transform-origin:top center;transition:all .2s var(--ease);z-index:10}
 .cmenu::before{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--bg);border-left:1px solid var(--line);border-top:1px solid var(--line);border-radius:2px 0 0 0}
 .cwrap.open .cmenu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
-.citem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2);transition:all .2s}
+.citem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2)}
 .citem:hover{background:var(--bg2);color:var(--text)}
 .citem-icon{width:16px;height:16px;flex:none;display:block;object-fit:contain;border-radius:4px}
 
@@ -107,35 +105,39 @@
 .log-foot b{color:var(--text);font-weight:600}
 
 /* 提示条 */
-/* KOOK 引流卡片 */
+/* KOOK 引流浮层 */
 .kook-card{
   position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:2800;
-  display:flex;align-items:center;gap:12px;
-  width:min(372px,calc(100vw - 32px));padding:12px 14px;
+  width:min(344px,calc(100vw - 32px));padding:14px;
   border-radius:14px;background:var(--bg);border:1px solid var(--line);
   box-shadow:0 18px 44px -26px rgba(0,0,0,.5);
   opacity:0;transform:translateY(14px);pointer-events:none;
   transition:opacity .24s ease,transform .24s var(--ease);
 }
 .kook-card.show{opacity:1;transform:none;pointer-events:auto}
+.kook-head{display:flex;align-items:flex-start;gap:10px}
 .kook-icon{width:40px;height:40px;border-radius:10px;object-fit:cover;flex:none;background:var(--fill)}
 .kook-text{flex:1;min-width:0}
 .kook-title{font-size:13.5px;font-weight:600;line-height:1.4;color:var(--text)}
 .kook-meta{margin-top:2px;font-size:12px;line-height:1.4;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kook-join{
-  flex:none;display:inline-flex;align-items:center;justify-content:center;
-  height:32px;padding:0 14px;border-radius:8px;
-  background:var(--btn-grad);color:#fff;font-size:13px;font-weight:500;
-  transition:background .2s ease;
-}
-.kook-join:hover{background:var(--btn-grad-hover)}
 .kook-close{
   flex:none;width:24px;height:24px;border-radius:6px;
   display:grid;place-items:center;color:var(--text3);
-  transition:background-color .2s ease,color .2s ease;
 }
 .kook-close:hover{color:var(--text);background:var(--fill)}
 .kook-close svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.kook-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.kook-view{
+  padding:0;border:0;background:none;cursor:pointer;
+  font-size:12.5px;font-weight:500;color:var(--text2);
+}
+.kook-view:hover{color:var(--text)}
+.kook-join{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;
+  height:32px;padding:0 14px;border-radius:8px;
+  background:var(--blue);color:#fff;font-size:13px;font-weight:500;
+}
+.kook-join:hover{background:var(--blue2)}
 /* 卡片出现时把提示条抬高，避免重叠 */
 body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
 
@@ -150,3 +152,17 @@ body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
   transition:opacity .18s ease,transform .18s var(--ease);
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* 在线玩家弹窗 */
+.kook-dialog-lead{margin:0 0 10px;font-size:12.5px;color:var(--text3)}
+.kook-members{list-style:none;margin:0 0 4px;padding:0;display:grid;gap:1px;max-height:300px;overflow:auto}
+.kook-member{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px}
+.kook-member:hover{background:var(--fill)}
+.kook-avatar{position:relative;flex:none;width:32px;height:32px}
+.kook-avatar img{width:32px;height:32px;border-radius:50%;object-fit:cover;display:block;background:var(--fill)}
+.kook-status{
+  position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;
+  background:#3ba55d;border:2px solid var(--bg);
+}
+.kook-name{font-size:13.5px;line-height:1.4;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kook-dialog-note{margin:12px 0 0;font-size:12.5px;line-height:1.6;color:var(--text3)}
