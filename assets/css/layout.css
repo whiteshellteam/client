@@ -97,12 +97,6 @@
 .mc-showcase{
   position:relative;width:100%;z-index:1;display:flex;flex-direction:column;align-items:center;
 }
-.pvp-glow{
-  position:absolute;left:50%;top:6%;width:120%;aspect-ratio:1;max-width:640px;
-  transform:translateX(-50%);border-radius:50%;
-  background:radial-gradient(closest-side,var(--halo),transparent 72%);
-  pointer-events:none;z-index:0;
-}
 .pvp-art{
   position:relative;z-index:1;
   display:block;width:100%;max-width:100%;height:auto;
