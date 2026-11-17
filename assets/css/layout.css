@@ -130,6 +130,7 @@ footer{margin-top:clamp(64px,9vw,110px);border-top:1px solid var(--line);padding
 .foot-cols{display:flex;gap:clamp(32px,5vw,72px);flex-wrap:wrap}
 .foot-col h4{font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:12px;letter-spacing:.04em}
 .foot-col ul{list-style:none;display:grid;gap:9px}
-.foot-col a,.foot-col button{font-size:13px;font-weight:400;color:var(--text2);transition:color .2s;text-align:left}
+.foot-col a,.foot-col button{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:400;color:var(--text2);transition:color .2s;text-align:left}
+.foot-icon{width:14px;height:14px;border-radius:3px;flex:none;object-fit:cover}
 .foot-col a:hover,.foot-col button:hover{color:var(--text)}
 .foot-bottom{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;font-weight:400;color:var(--text3)}
