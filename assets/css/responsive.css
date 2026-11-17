@@ -9,7 +9,7 @@
   .hero-text{max-width:100%;margin-inline:auto;align-items:center}
   .hero h1{font-size:clamp(32px,8.4vw,44px)}
   .hero-actions{justify-content:center}
-  .hero-visual{max-width:420px;margin-inline:auto}
+  .hero-visual{max-width:460px;margin-inline:auto}
 }
 @media (max-width:860px){.nav-links{display:none}.nav-act{display:none}.menu-btn{display:grid}}
 @media (max-width:700px){

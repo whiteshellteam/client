@@ -93,15 +93,34 @@
 
 /* 右侧方块视觉 */
 /* ================= 右侧 MC 元素方块集群 ================= */
-.hero-visual{position:relative;width:100%;max-width:470px;margin-left:auto;animation:rise 1.1s var(--ease) .2s both}
+.hero-visual{position:relative;width:100%;max-width:520px;margin-inline:auto;overflow:visible;animation:rise 1.1s var(--ease) .2s both}
 .mc-showcase{
-  position:relative;width:100%;z-index:1;display:grid;place-items:center;
+  position:relative;width:100%;z-index:1;display:flex;flex-direction:column;align-items:center;
+}
+.pvp-glow{
+  position:absolute;left:50%;top:6%;width:120%;aspect-ratio:1;max-width:640px;
+  transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(closest-side,var(--halo),transparent 72%);
+  pointer-events:none;z-index:0;
 }
 .pvp-art{
-  display:block;width:100%;height:auto;
+  position:relative;z-index:1;
+  display:block;width:100%;max-width:100%;height:auto;
   filter:drop-shadow(0 26px 30px rgba(0,0,0,.22));
   animation:pvp-float 9s ease-in-out infinite alternate;
 }
+.pvp-ground{
+  position:relative;z-index:1;
+  display:flex;justify-content:center;gap:clamp(8px,2vw,16px);
+  margin-top:-6px;
+}
+.pvp-ground img{
+  width:clamp(38px,7vw,56px);height:auto;
+  filter:drop-shadow(0 10px 14px rgba(0,0,0,.2));
+  animation:pvp-float 7s ease-in-out infinite alternate;
+}
+.pvp-ground img:nth-child(2n){animation-duration:8.5s;animation-delay:-1.2s;animation-direction:alternate-reverse}
+.pvp-ground img:nth-child(3){animation-duration:9.5s;animation-delay:-2.4s}
 @keyframes pvp-float{
   from{transform:translateY(0)}
   to{transform:translateY(-12px)}

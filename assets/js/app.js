@@ -32,6 +32,7 @@
   }
 
   function boot() {
+    WS.cache.init();
     WS.toast.init();
     WS.theme.init();
     WS.nav.init();
