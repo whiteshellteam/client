@@ -369,6 +369,36 @@ footer{margin-top:clamp(64px,9vw,110px);border-top:1px solid var(--line);padding
 .log-foot b{color:var(--text);font-weight:600}
 .log-foot .btn-pill{height:34px;padding:0 14px;border-radius:8px;font-size:13px;font-weight:500}
 
+/* KOOK 引流浮层 */
+.kook-card{
+  position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:2800;
+  width:min(344px,calc(100vw - 32px));padding:14px;
+  border-radius:12px;background:var(--elev);border:1px solid var(--line);
+  box-shadow:0 18px 44px -26px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(26px) scale(.94);pointer-events:none;
+  transition:opacity .26s ease,transform .52s cubic-bezier(.34,1.45,.5,1);
+}
+.kook-card.show{opacity:1;transform:none;pointer-events:auto}
+.kook-head{display:flex;align-items:flex-start;gap:10px}
+.kook-icon{width:40px;height:40px;border-radius:10px;object-fit:cover;flex:none;background:var(--fill)}
+.kook-text{flex:1;min-width:0}
+.kook-title{font-size:13.5px;font-weight:600;line-height:1.4;color:var(--text)}
+.kook-meta{margin-top:2px;font-size:12px;line-height:1.4;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kook-close{flex:none;width:24px;height:24px;border-radius:6px;display:grid;place-items:center;color:var(--text3)}
+.kook-close:hover{color:var(--text);background:var(--fill)}
+.kook-close svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.kook-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.kook-view{padding:0;border:0;background:none;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text2)}
+.kook-view:hover{color:var(--text)}
+.kook-join{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;
+  height:32px;padding:0 14px;border-radius:8px;
+  background:var(--kook-green);color:#0d1400;font-size:13px;font-weight:600;
+}
+.kook-join:hover{background:var(--kook-green-2)}
+/* 浮层出现时把提示条抬高，避免重叠 */
+body.kook-open #toast{bottom:calc(92px + env(safe-area-inset-bottom))}
+
 /* Toast —— Sonner 规格 */
 #toast{
   position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:3000;
