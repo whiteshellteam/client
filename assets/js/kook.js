@@ -13,7 +13,7 @@
 
   var FALLBACK = {
     name: 'Minecraft中国版社区',
-    icon: 'assets/img/icons/kook.png',
+    icon: 'assets/img/kook-guild.jpg',
     online_count: '',
     invite_link: 'https://kook.vip/vp71ue',
     members: []
@@ -90,7 +90,8 @@
     icon.width = 40;
     icon.height = 40;
     icon.setAttribute('data-optional', '');
-    icon.src = data.icon || FALLBACK.icon;
+    /* 固定使用服务器图标（已下载到本地），避免远程头像时好时坏导致图标跳动 */
+    icon.src = FALLBACK.icon;
     icon.addEventListener('error', function () {
       if (icon.src.indexOf('icons/kook.png') === -1) icon.src = 'assets/img/icons/kook.png';
     });
