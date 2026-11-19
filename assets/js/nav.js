@@ -60,17 +60,6 @@
     WS.on(menuBtn, 'click', function () {
       setSheet(!isSheetOpen());
     });
-
-    // 抽屉里的链接：先收起抽屉，锚点滚动交给下面的 initAnchors
-    WS.$$('a', sheet).forEach(function (link) {
-      link.addEventListener('click', function () {
-        if (link.getAttribute('href') === '#') {
-          setTimeout(function () { setSheet(false); }, 80);
-        } else {
-          setSheet(false);
-        }
-      });
-    });
   }
 
   /** 顶部为纯色，向下滚动后切换为毛玻璃 */
@@ -85,23 +74,34 @@
     window.addEventListener('scroll', update, { passive: true });
   }
 
+  /** 站内锚点：平滑滚动，同时保持地址栏干净（不残留 #faq 这类 hash） */
   function initAnchors() {
-    if (!sheet) return;
-    WS.$$('a[href^="#"]', sheet).forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        var href = link.getAttribute('href');
-        if (!href || href.length < 2) return;
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!link) return;
 
-        var target = document.querySelector(href);
-        if (!target) return;
+      var href = link.getAttribute('href');
+      if (!href || href.length < 2) return;
 
-        e.preventDefault();
-        window.setTimeout(function () {
-          var top = target.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-        }, 180);
-      }, true);
-    });
+      var target = document.querySelector(href);
+      if (!target) return;
+
+      e.preventDefault();
+
+      var fromSheet = !!(sheet && sheet.contains(link));
+      if (fromSheet) setSheet(false);
+
+      var jump = function () {
+        var top = target.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        if (location.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      };
+
+      if (fromSheet) window.setTimeout(jump, 180);
+      else jump();
+    }, true);
   }
 
   WS.nav = {
@@ -113,6 +113,13 @@
       initSheet();
       initAnchors();
       initScrollState();
+
+      /* 进场时地址栏若残留 hash，滚到位置后清掉，避免复制出带 #faq 的链接 */
+      if (location.hash) {
+        window.setTimeout(function () {
+          if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+        }, 300);
+      }
     }
   };
 })(window.WS);
