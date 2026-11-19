@@ -1,0 +1,9 @@
+# Cloudflare Workers 静态资源部署配置
+# 用 Workers Builds 连接本仓库时，`npx wrangler deploy` 会把整个目录作为静态站点发布。
+
+name = "whiteshell"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "."
+not_found_handling = "404-page"
